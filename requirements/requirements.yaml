@@ -1,0 +1,208 @@
+# Forte POS — Core Requirements
+# Structured, versioned product requirements for the prototype.
+# This file is the single source of truth for scope. Features map 1:1 to
+# JS logic modules (assets/js/*.js) and test suites (tests/*.test.js).
+
+meta:
+  product: Forte
+  tagline: The smart kitchen POS
+  group: Piano (Septim / Qerko family)
+  version: 0.1.0
+  status: prototype
+  platform:
+    delivery: GitHub Pages (static)
+    stack: [html, css, vanilla-js-esm, json]
+    build_step: none
+    runtime_dependencies: none
+  locale:
+    primary_market: CZ
+    currency: CZK
+    regulations:
+      - id: EU-1169-2011
+        name: Food Information to Consumers (allergen declaration)
+        note: 14 mandatory allergens must be declarable per menu item.
+      - id: EET-2.0
+        name: Electronic records of sales (effective 2027-01-01)
+        note: Out of prototype scope; noted for roadmap only.
+
+# ---------------------------------------------------------------------------
+# Personas / roles (hard-coded for the prototype, no auth)
+# ---------------------------------------------------------------------------
+roles:
+  - id: waiter
+    label: Waiter
+    goal: Take orders quickly and answer guest dietary questions with confidence.
+    primary_surface: order-screen
+  - id: chef
+    label: Chef / Kitchen
+    goal: Prep the right quantities, keep the allergen matrix correct, log waste.
+    primary_surface: kitchen
+  - id: manager
+    label: Manager / Owner
+    goal: Protect margin and reduce waste using live numbers, not month-old reports.
+    primary_surface: dashboard
+
+# ---------------------------------------------------------------------------
+# Shared data model (mock JSON store under /data)
+# ---------------------------------------------------------------------------
+data_model:
+  entities:
+    - name: ingredient
+      file: data/ingredients.json
+      key: id
+      fields:
+        - {name: id, type: string}
+        - {name: name, type: string}
+        - {name: unit, type: enum, values: [g, ml, pcs]}
+        - {name: pack_price_czk, type: number, note: price paid per pack}
+        - {name: pack_size, type: number, note: quantity of `unit` per pack}
+        - {name: supplier_id, type: string, ref: supplier.id}
+        - {name: allergens, type: array<string>, ref: allergen.code}
+        - {name: price_history, type: array<{date, pack_price_czk}>}
+    - name: allergen
+      file: data/allergens.json
+      key: code
+      fields:
+        - {name: code, type: string, note: EU allergen number 1..14 as string}
+        - {name: name, type: string}
+        - {name: icon, type: string}
+    - name: recipe
+      file: data/recipes.json
+      key: id
+      note: A recipe is a sellable menu item composed of ingredient lines.
+      fields:
+        - {name: id, type: string}
+        - {name: name, type: string}
+        - {name: category, type: string}
+        - {name: price_czk, type: number, note: menu sell price}
+        - {name: target_food_cost_pct, type: number, note: e.g. 0.30}
+        - {name: diet_tags, type: array<string>, values: [vegetarian, vegan, gluten-free-capable]}
+        - {name: components, type: array<{ingredient_id, qty, unit}>}
+    - name: supplier
+      file: data/suppliers.json
+      key: id
+      fields:
+        - {name: id, type: string}
+        - {name: name, type: string}
+    - name: sale
+      file: data/sales.json
+      key: null
+      note: One row per sold item per day (mock historical sales).
+      fields:
+        - {name: date, type: date}
+        - {name: recipe_id, type: string, ref: recipe.id}
+        - {name: qty, type: number}
+        - {name: weekday, type: integer, note: 0=Mon .. 6=Sun}
+
+# ---------------------------------------------------------------------------
+# Features (each maps to a logic module + test suite)
+# ---------------------------------------------------------------------------
+features:
+  - id: F1
+    name: Allergen & dietary intelligence
+    priority: must
+    module: assets/js/allergens.js
+    tests: tests/allergens.test.js
+    rationale: >
+      Legal requirement (EU 1169/2011) that every venue maintains poorly by hand.
+      This is the wedge feature: instantly demoable, universally understood value.
+    requirements:
+      - id: F1-R1
+        text: Derive a menu item's allergens from the union of its ingredients' allergens.
+      - id: F1-R2
+        text: >
+          When an ingredient's allergen set changes, every recipe using it reflects
+          the change with no manual relabelling.
+      - id: F1-R3
+        text: >
+          Given a set of allergens to avoid, classify each menu item as SAFE or
+          CONTAINS, listing which offending allergens are present.
+      - id: F1-R4
+        text: Filter the menu to only items a guest CAN eat (positive framing).
+      - id: F1-R5
+        text: Generate the full allergen matrix (item x 14 allergens) for compliance.
+      - id: F1-R6
+        text: Support diet tags (vegetarian, vegan) as an additional filter axis.
+    acceptance:
+      - Changing peanut flag on one ingredient flips all dependent items to CONTAINS.
+      - The matrix lists all 14 EU allergens as columns for every menu item.
+
+  - id: F2
+    name: Real-time food cost engine
+    priority: must
+    module: assets/js/foodcost.js
+    tests: tests/foodcost.test.js
+    rationale: >
+      Owners discover margin problems weeks late in the accountant's report.
+      Live cost % per dish is a genuine differentiator no CZ POS offers today.
+    requirements:
+      - id: F2-R1
+        text: >
+          Compute unit cost of an ingredient as pack_price_czk / pack_size.
+      - id: F2-R2
+        text: >
+          Compute a recipe's plate cost as the sum of (component qty x ingredient unit cost).
+      - id: F2-R3
+        text: Compute food-cost % as plate_cost / sell_price.
+      - id: F2-R4
+        text: Compute margin (CZK) and margin % per dish.
+      - id: F2-R5
+        text: >
+          Flag a dish when its food-cost % exceeds its target_food_cost_pct
+          (i.e., margin slipped below target).
+      - id: F2-R6
+        text: >
+          Recompute all of the above from the latest price in an ingredient's
+          price_history so a price spike is reflected immediately.
+    acceptance:
+      - A butter price spike raises dependent dishes' food-cost % and can trip the alert.
+      - Food-cost %, margin CZK, and margin % are internally consistent.
+
+  - id: F3
+    name: Smart prep & waste reduction
+    priority: should
+    module: assets/js/prep.js
+    tests: tests/prep.test.js
+    rationale: >
+      Reuses the same recipe + sales data; adds forecasting "wow" and closes the
+      story: we know what's in the food, what it costs, and how much to make.
+    requirements:
+      - id: F3-R1
+        text: >
+          Forecast tomorrow's demand per menu item from historical sales for the
+          same weekday (simple moving average — explainable, not a black box).
+      - id: F3-R2
+        text: >
+          Produce a prep list: forecast quantity per item, rounded up to a sensible
+          batch, with the ingredient quantities required to prep it.
+      - id: F3-R3
+        text: Log waste (item, qty, reason) and value it using the food cost engine.
+      - id: F3-R4
+        text: Summarise waste over a period (total CZK, top offenders).
+    acceptance:
+      - Forecast for a weekday equals the moving average of that weekday's sales.
+      - Waste value equals qty x plate cost from the food cost engine.
+
+# ---------------------------------------------------------------------------
+# Explicitly out of scope for the prototype (roadmap only)
+# ---------------------------------------------------------------------------
+out_of_scope:
+  - Qerko pay-at-table integration (hard to mock without payment infra)
+  - Staff scheduling & labour-law compliance (separate complex domain)
+  - Unified multi-channel menu publishing (Wolt/Bolt/Foodora APIs)
+  - Real authentication (roles are hard-coded and switchable in the UI)
+  - Persistence beyond the browser session (JSON is read-only seed data)
+
+# ---------------------------------------------------------------------------
+# Non-functional requirements
+# ---------------------------------------------------------------------------
+nfr:
+  responsive:
+    text: Must be usable on phone (waiter), tablet (kitchen), and desktop (manager).
+    breakpoints_px: [480, 768, 1024]
+  performance:
+    text: First render under 1s on a mid-range phone; no heavy libraries.
+  accessibility:
+    text: Semantic HTML, sufficient colour contrast, focus states, ARIA where needed.
+  testability:
+    text: All feature logic is pure and unit-tested via node --test.
