@@ -6,17 +6,78 @@ import { esc, czk, pct, WEEKDAYS, tomorrowWeekday, statusClass } from "./ui.js";
 import { classifyRecipe, matchesDiet, allergenMatrix } from "./allergens.js";
 import { analyzeMenu, marginAlerts } from "./foodcost.js";
 import { buildPrepList, summariseWaste } from "./prep.js";
+import {
+  emptyOrder,
+  addLine,
+  setQty,
+  removeLine,
+  orderCount,
+  orderTotal,
+  createTicket,
+  annotateTicket,
+} from "./order.js";
+
+const STORAGE_KEY = "forte.demo.v1"; // namespaced + versioned demo cache
 
 const state = {
   store: null,
   role: "waiter",
-  avoid: new Set(), // allergen codes the guest avoids
-  diets: new Set(), // required diet tags
+  avoid: new Set(), // allergen codes the guest avoids (= guest profile)
+  diets: new Set(), // required diet tags (= guest profile)
   prepWeekday: tomorrowWeekday(),
-  wasteLog: [], // { recipe_id, qty, reason } — in-memory only (no persistence)
+  wasteLog: [], // { recipe_id, qty, reason }
+  order: emptyOrder(), // current draft order (waiter)
+  tickets: [], // sent kitchen tickets (chef)
 };
 
 const root = () => document.getElementById("view");
+
+// --- demo persistence (localStorage + cross-tab sync) -----------------------
+
+let suppressSave = false; // guard against save loops during hydration
+
+function persist() {
+  if (suppressSave) return;
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        avoid: [...state.avoid],
+        diets: [...state.diets],
+        order: state.order,
+        tickets: state.tickets,
+      }),
+    );
+  } catch {
+    /* storage unavailable (private mode) — demo still works in memory */
+  }
+}
+
+function hydrate() {
+  let saved;
+  try {
+    saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+  } catch {
+    saved = null;
+  }
+  if (!saved) return false;
+  suppressSave = true;
+  state.avoid = new Set(saved.avoid ?? []);
+  state.diets = new Set(saved.diets ?? []);
+  state.order = saved.order ?? emptyOrder();
+  state.tickets = saved.tickets ?? [];
+  suppressSave = false;
+  return true;
+}
+
+// Seed one illustrative ticket so #chef is never blank on a fresh demo.
+function seedDemo() {
+  let o = addLine(emptyOrder(), "rec-lentil-curry");
+  o = addLine(o, "rec-schnitzel"); // deliberately conflicts with "avoid gluten"
+  state.tickets = [createTicket(o, { avoid: ["1"], diets: [] }, { id: "T-sample" })];
+  persist();
+}
+
 
 // --- small render helpers ---------------------------------------------------
 
@@ -97,6 +158,7 @@ function renderWaiter() {
               <div class="right nowrap">
                 <div>${czk(r.price_czk)}</div>
                 ${badge}
+                <button class="btn small" data-add="${esc(r.id)}" style="margin-top:4px">+ Add</button>
               </div>
             </li>`;
         })
@@ -127,7 +189,65 @@ function renderWaiter() {
         ${avoid.length || diets.length ? `<button class="btn small" id="clear-filter" style="margin-left:8px">Clear</button>` : ""}
       </div>
     </div>
+    ${renderOrderPanel()}
     ${menuHtml}`;
+}
+
+// Order panel — the draft ticket the waiter is building.
+function renderOrderPanel() {
+  const { recipeIndex } = state.store;
+  const avoid = [...state.avoid];
+  const lines = state.order.lines;
+  const total = orderTotal(state.order, recipeIndex);
+
+  const body = lines.length
+    ? `<ul class="row-list">${lines
+        .map((l) => {
+          const r = recipeIndex.get(l.recipe_id);
+          const cls = r ? classifyRecipe(r, state.store.ingredientIndex, avoid) : { offending: [] };
+          const warn = cls.offending.length
+            ? `<span class="badge danger">⚠ contains ${esc(
+                cls.offending.map((c) => state.store.allergenIndex.get(c)?.name ?? c).join(", "),
+              )}</span>`
+            : "";
+          return `
+            <li class="row">
+              <div class="row-main">
+                <span class="row-title">${esc(r?.name ?? l.recipe_id)} ${warn}</span>
+                <span class="muted">${czk(r?.price_czk ?? 0)} each</span>
+              </div>
+              <div class="right nowrap">
+                <button class="btn small" data-dec="${esc(l.recipe_id)}">−</button>
+                <strong style="margin:0 6px">${l.qty}</strong>
+                <button class="btn small" data-inc="${esc(l.recipe_id)}">+</button>
+                <button class="btn small" data-del="${esc(l.recipe_id)}" style="margin-left:6px">✕</button>
+              </div>
+            </li>`;
+        })
+        .join("")}</ul>
+       <div class="view-title" style="margin-top:12px">
+         <strong>Total: ${czk(total)}</strong>
+         <span>
+           <button class="btn small" id="order-clear">Clear</button>
+           <button class="btn primary small" id="order-send">Send to kitchen →</button>
+         </span>
+       </div>`
+    : `<p class="muted">No items yet. Tap “+ Add” on a dish. The guest's allergen profile travels with the order to the kitchen.</p>`;
+
+  return `
+    <div class="card section">
+      <div class="view-title" style="margin-bottom:8px">
+        <h3 style="margin:0">Current order <span class="badge neutral">${orderCount(state.order)}</span></h3>
+        ${
+          avoid.length || state.diets.size
+            ? `<span class="muted">guest avoids ${esc(
+                avoid.map((c) => state.store.allergenIndex.get(c)?.name ?? c).join(", ") || "—",
+              )}${state.diets.size ? ` · ${esc([...state.diets].join(", "))}` : ""}</span>`
+            : `<span class="muted">no guest restrictions set</span>`
+        }
+      </div>
+      ${body}
+    </div>`;
 }
 
 function wireWaiter() {
@@ -137,6 +257,7 @@ function wireWaiter() {
       btn.addEventListener("click", () => {
         const code = btn.getAttribute("data-avoid");
         state.avoid.has(code) ? state.avoid.delete(code) : state.avoid.add(code);
+        persist();
         render();
       }),
     );
@@ -146,6 +267,7 @@ function wireWaiter() {
       btn.addEventListener("click", () => {
         const d = btn.getAttribute("data-diet");
         state.diets.has(d) ? state.diets.delete(d) : state.diets.add(d);
+        persist();
         render();
       }),
     );
@@ -154,11 +276,118 @@ function wireWaiter() {
     clear.addEventListener("click", () => {
       state.avoid.clear();
       state.diets.clear();
+      persist();
       render();
+    });
+
+  // order panel
+  const onOrderChange = () => {
+    persist();
+    render();
+  };
+  root()
+    .querySelectorAll("[data-add]")
+    .forEach((b) =>
+      b.addEventListener("click", () => {
+        state.order = addLine(state.order, b.getAttribute("data-add"));
+        onOrderChange();
+      }),
+    );
+  root()
+    .querySelectorAll("[data-inc]")
+    .forEach((b) =>
+      b.addEventListener("click", () => {
+        state.order = addLine(state.order, b.getAttribute("data-inc"));
+        onOrderChange();
+      }),
+    );
+  root()
+    .querySelectorAll("[data-dec]")
+    .forEach((b) =>
+      b.addEventListener("click", () => {
+        const id = b.getAttribute("data-dec");
+        const line = state.order.lines.find((l) => l.recipe_id === id);
+        state.order = setQty(state.order, id, (line?.qty ?? 1) - 1);
+        onOrderChange();
+      }),
+    );
+  root()
+    .querySelectorAll("[data-del]")
+    .forEach((b) =>
+      b.addEventListener("click", () => {
+        state.order = removeLine(state.order, b.getAttribute("data-del"));
+        onOrderChange();
+      }),
+    );
+  const clearOrder = root().querySelector("#order-clear");
+  if (clearOrder)
+    clearOrder.addEventListener("click", () => {
+      state.order = emptyOrder();
+      onOrderChange();
+    });
+  const send = root().querySelector("#order-send");
+  if (send)
+    send.addEventListener("click", () => {
+      if (!state.order.lines.length) return;
+      const ticket = createTicket(state.order, { avoid: [...state.avoid], diets: [...state.diets] });
+      state.tickets = [ticket, ...state.tickets];
+      state.order = emptyOrder();
+      onOrderChange();
     });
 }
 
 // --- CHEF: prep list, allergen matrix, waste logging ------------------------
+
+// Ticket board — sent orders, with allergen conflicts flagged at the pass.
+function renderTicketBoard() {
+  const { recipeIndex, ingredientIndex, allergenIndex } = state.store;
+  if (!state.tickets.length) {
+    return `<section class="section"><h2>Tickets</h2><div class="empty">No open tickets. Send one from the Waiter screen.</div></section>`;
+  }
+  const cards = state.tickets
+    .map((t) => {
+      const a = annotateTicket(t, recipeIndex, ingredientIndex);
+      const avoidNames = a.guest.avoid.map((c) => allergenIndex.get(c)?.name ?? c);
+      const guestLine = avoidNames.length
+        ? `avoids ${esc(avoidNames.join(", "))}`
+        : "no restrictions";
+      const time = new Date(a.createdAt).toLocaleTimeString("cs-CZ", { hour: "2-digit", minute: "2-digit" });
+      const lines = a.lines
+        .map(
+          (l) => `
+          <li class="row" style="${l.conflict ? "border-color:var(--danger);background:var(--danger-soft)" : ""}">
+            <div class="row-main">
+              <span class="row-title">${l.qty}× ${esc(l.name)}</span>
+              ${
+                l.conflict
+                  ? `<span class="badge danger">⚠ guest avoids ${esc(
+                      l.offending.map((c) => allergenIndex.get(c)?.name ?? c).join(", "),
+                    )} — dish contains it</span>`
+                  : `<span class="badge safe">✓ ok for this guest</span>`
+              }
+            </div>
+          </li>`,
+        )
+        .join("");
+      return `
+        <div class="card">
+          <div class="view-title" style="margin-bottom:8px">
+            <h3 style="margin:0">${esc(a.id)} ${a.hasConflict ? `<span class="badge danger">check allergens</span>` : ""}</h3>
+            <span class="muted">${esc(time)} · ${guestLine}</span>
+          </div>
+          <ul class="row-list">${lines}</ul>
+          <div style="margin-top:10px" class="right">
+            <button class="btn small" data-bump="${esc(a.id)}">Mark done</button>
+          </div>
+        </div>`;
+    })
+    .join("");
+  return `
+    <section class="section">
+      <div class="view-title"><h2>Tickets <span class="badge neutral">${state.tickets.length}</span></h2></div>
+      <div class="grid grid-cards">${cards}</div>
+    </section>`;
+}
 
 function renderChef() {
   const { recipes, ingredientIndex, sales, allergens, recipeIndex } = state.store;
@@ -216,6 +445,8 @@ function renderChef() {
         <div class="subtitle">Prep the right amount, keep the allergen matrix correct, log what you waste.</div>
       </div>
     </div>
+
+    ${renderTicketBoard()}
 
     <section class="section">
       <div class="view-title">
@@ -291,6 +522,16 @@ function wireChef() {
       state.wasteLog.push({ recipe_id, qty, reason });
       render();
     });
+  root()
+    .querySelectorAll("[data-bump]")
+    .forEach((b) =>
+      b.addEventListener("click", () => {
+        const id = b.getAttribute("data-bump");
+        state.tickets = state.tickets.filter((t) => t.id !== id);
+        persist();
+        render();
+      }),
+    );
 }
 
 // --- MANAGER: food-cost dashboard -------------------------------------------
@@ -393,11 +634,18 @@ function wireRoleSwitch() {
     btn.addEventListener("click", () => setRole(btn.getAttribute("data-role"))),
   );
   window.addEventListener("hashchange", () => setRole(location.hash.slice(1) || "waiter"));
+  // Cross-tab demo sync: another tab (e.g. the kitchen screen) updated state.
+  window.addEventListener("storage", (e) => {
+    if (e.key !== STORAGE_KEY) return;
+    hydrate();
+    render();
+  });
 }
 
 async function init() {
   try {
     state.store = await loadStore();
+    if (!hydrate()) seedDemo(); // first visit → seed a sample ticket
     const fromHash = location.hash.slice(1);
     if (VIEWS[fromHash]) state.role = fromHash;
     wireRoleSwitch();
