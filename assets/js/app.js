@@ -16,8 +16,12 @@ import {
   createTicket,
   annotateTicket,
 } from "./order.js";
+import { indexIngredients } from "./allergens.js";
+import { baselineOverlay, stepMarket, applyOverlay } from "./market.js";
 
 const STORAGE_KEY = "forte.demo.v1"; // namespaced + versioned demo cache
+const MARKET_SEED = 1; // deterministic market for rehearsable demos
+const MARKET_INTERVAL_MS = 3000;
 
 const state = {
   store: null,
@@ -28,9 +32,18 @@ const state = {
   wasteLog: [], // { recipe_id, qty, reason }
   order: emptyOrder(), // current draft order (waiter)
   tickets: [], // sent kitchen tickets (chef)
+  market: { overlay: null, tick: 0, running: false, lastMoves: [], lastEvent: null },
 };
 
+let marketTimer = null; // not persisted — each tab runs its own
+
 const root = () => document.getElementById("view");
+
+// Ingredient index with the current market overlay applied (for F2 recompute).
+function pricedIndex() {
+  return indexIngredients(applyOverlay(state.store.ingredients, state.market.overlay));
+}
+
 
 // --- demo persistence (localStorage + cross-tab sync) -----------------------
 
@@ -46,6 +59,7 @@ function persist() {
         diets: [...state.diets],
         order: state.order,
         tickets: state.tickets,
+        market: { overlay: state.market.overlay, tick: state.market.tick },
       }),
     );
   } catch {
@@ -66,6 +80,10 @@ function hydrate() {
   state.diets = new Set(saved.diets ?? []);
   state.order = saved.order ?? emptyOrder();
   state.tickets = saved.tickets ?? [];
+  if (saved.market?.overlay) {
+    state.market.overlay = saved.market.overlay;
+    state.market.tick = saved.market.tick ?? 0;
+  }
   suppressSave = false;
   return true;
 }
@@ -537,7 +555,8 @@ function wireChef() {
 // --- MANAGER: food-cost dashboard -------------------------------------------
 
 function renderManager() {
-  const { recipes, ingredientIndex, recipeIndex } = state.store;
+  const { recipes, recipeIndex } = state.store;
+  const ingredientIndex = pricedIndex(); // F2 recomputes from the live market overlay
   const menu = analyzeMenu(recipes, ingredientIndex);
   const alerts = marginAlerts(recipes, ingredientIndex);
   const avgFc = menu.reduce((a, m) => a + m.foodCostPct, 0) / menu.length;
@@ -550,6 +569,8 @@ function renderManager() {
       <div class="tile ${alerts.length ? "is-danger" : "is-safe"}"><div class="tile-label">Margin alerts</div><div class="tile-value">${alerts.length}</div></div>
       <div class="tile ${waste.totalCzk ? "is-warn" : "is-safe"}"><div class="tile-label">Waste (session)</div><div class="tile-value">${czk(waste.totalCzk)}</div></div>
     </div>`;
+
+  const marketPanel = renderMarketPanel();
 
   const alertHtml = alerts.length
     ? `<ul class="row-list">${alerts
@@ -587,6 +608,7 @@ function renderManager() {
         <div class="subtitle">Live margins from current ingredient prices — not last month's report.</div>
       </div>
     </div>
+    ${marketPanel}
     ${tiles}
     <section class="section">
       <h2>Margin alerts</h2>
@@ -603,12 +625,95 @@ function renderManager() {
     </section>`;
 }
 
+// Market simulator controls + ticker strip.
+function renderMarketPanel() {
+  const m = state.market;
+  const moves = m.lastMoves ?? [];
+  const ticker = moves.length
+    ? moves
+        .map(
+          (mv) =>
+            `<span class="chip">${esc(mv.icon)} ${esc(mv.name)} <strong style="color:${mv.dir === "up" ? "var(--danger)" : "var(--safe)"}">${mv.dir === "up" ? "▲" : "▼"} ${pct(Math.abs(mv.pct), 1)}</strong></span>`,
+        )
+        .join("")
+    : `<span class="muted">Idle — press Step or Play to simulate market prices.</span>`;
+  const eventBadge = m.lastEvent ? `<span class="badge warn">📣 ${esc(m.lastEvent)}</span>` : "";
+
+  return `
+    <div class="card section">
+      <div class="view-title" style="margin-bottom:8px">
+        <h3 style="margin:0">Market simulator ${eventBadge}</h3>
+        <span>
+          <button class="btn small" id="mkt-step">Step</button>
+          <button class="btn ${m.running ? "" : "primary"} small" id="mkt-play">${m.running ? "Pause" : "Play"}</button>
+          <button class="btn small" id="mkt-reset">Reset</button>
+          <span class="badge neutral" style="margin-left:6px">tick ${m.tick}</span>
+        </span>
+      </div>
+      <div class="chips">${ticker}</div>
+    </div>`;
+}
+
+function stopMarket() {
+  if (marketTimer) {
+    clearInterval(marketTimer);
+    marketTimer = null;
+  }
+  state.market.running = false;
+}
+
+function marketTick() {
+  const { overlay, moves, event } = stepMarket(
+    state.market.overlay,
+    state.store.ingredients,
+    state.market.tick + 1,
+    MARKET_SEED,
+  );
+  state.market.overlay = overlay;
+  state.market.tick += 1;
+  state.market.lastMoves = moves;
+  state.market.lastEvent = event;
+  persist();
+  if (state.role === "manager") render();
+}
+
+function wireManager() {
+  const step = root().querySelector("#mkt-step");
+  if (step)
+    step.addEventListener("click", () => {
+      marketTick();
+      if (state.role !== "manager") render();
+    });
+  const play = root().querySelector("#mkt-play");
+  if (play)
+    play.addEventListener("click", () => {
+      if (state.market.running) {
+        stopMarket();
+      } else {
+        state.market.running = true;
+        marketTimer = setInterval(marketTick, MARKET_INTERVAL_MS);
+      }
+      render();
+    });
+  const reset = root().querySelector("#mkt-reset");
+  if (reset)
+    reset.addEventListener("click", () => {
+      stopMarket();
+      state.market.overlay = baselineOverlay(state.store.ingredients);
+      state.market.tick = 0;
+      state.market.lastMoves = [];
+      state.market.lastEvent = null;
+      persist();
+      render();
+    });
+}
+
 // --- shell ------------------------------------------------------------------
 
 const VIEWS = {
   waiter: { render: renderWaiter, wire: wireWaiter },
   chef: { render: renderChef, wire: wireChef },
-  manager: { render: renderManager, wire: () => {} },
+  manager: { render: renderManager, wire: wireManager },
 };
 
 function render() {
@@ -624,6 +729,7 @@ function render() {
 
 function setRole(role) {
   if (!VIEWS[role]) return;
+  if (role !== "manager") stopMarket(); // don't tick in the background off-dashboard
   state.role = role;
   if (location.hash.slice(1) !== role) location.hash = role; // deep-linkable roles
   render();
@@ -646,6 +752,7 @@ async function init() {
   try {
     state.store = await loadStore();
     if (!hydrate()) seedDemo(); // first visit → seed a sample ticket
+    if (!state.market.overlay) state.market.overlay = baselineOverlay(state.store.ingredients);
     const fromHash = location.hash.slice(1);
     if (VIEWS[fromHash]) state.role = fromHash;
     wireRoleSwitch();
