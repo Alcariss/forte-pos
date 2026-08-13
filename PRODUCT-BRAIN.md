@@ -117,28 +117,54 @@ backend service.
 
 ---
 
-## 5. Vision / Mission / Strategy (draft)
+## 5. Vision / Mission / Strategy — the Allergy Navigator
 
-**Vision.** Eating out is never a gamble — no guest is anxious about what's on the
-plate, and no restaurant lives in fear of an allergen mistake.
+**Vision.** Eating out is never a gamble. Every guest orders without fear, and
+every restaurant serves without the dread of an allergen mistake — because what's
+in the food is always known, current, and impossible to lose track of.
+*(One-liner: a world where nobody has to guess what's on the plate.)*
 
-**Mission.** Give every venue a single, automatic source of truth for allergens
-that is always current and follows the guest from menu to plate.
+**Mission.** Give every restaurant a single, automatic source of truth for
+allergens — derived from their real recipes, always up to date, and carried with
+the guest from the menu all the way to the pass.
+*(One-liner: make allergen safety automatic, current, and impossible to forget.)*
 
-**Strategy (wedge → expand).**
-1. **Land** as a plugin/add-on to existing POS, starting inside the
-   Piano/Septim/Qerko ecosystem where the recipe & warehouse data already lives.
-2. **Wedge** on allergen compliance + safety (the legal + emotional pain nobody
-   solves well).
-3. **Expand** into the adjacent intelligence the same data unlocks — real-time
-   food cost, then prep & waste.
-4. **Defend** with the derived-from-recipe data model and the "safety follows the
-   order" workflow — hard to bolt onto a labels-based competitor.
+**Strategy — how we win.**
+
+1. **Wedge — start where the pain is sharpest.** Lead with allergen compliance and
+   safety, the one job every Czech venue is legally required to do (EU 1169/2011)
+   yet maintains by hand. Win the demo in 30 seconds: change one ingredient's
+   allergen and every dish updates itself.
+2. **Position — a layer, not another till.** We are the allergen intelligence layer
+   that plugs into the POS you already run. This avoids a feature race with
+   Dotykačka and a price war at the bottom, and it's a realistic route to market
+   inside the Piano / Septim / Qerko ecosystem where recipe and warehouse data
+   already lives.
+3. **Moat — build on data competitors can't easily copy.** Allergens are *derived*
+   from recipe ingredients, never stored as labels. That keeps them always-current
+   and lets safety *follow the order* to the kitchen — a labels-based competitor
+   can't bolt this on without rebuilding their data model.
+4. **Expand — grow into the intelligence the same data unlocks.**
+   - Phase 1: allergen & dietary intelligence (the wedge).
+   - Phase 2: real-time food cost & margin (same ingredient data).
+   - Phase 3: smart prep & waste reduction (same recipe & sales data).
+   - One shared model throughout: ingredients → recipes → sales.
 
 **Positioning line.** *"The allergen intelligence layer for your POS."*
 
-**Anti-goals.** We are not chasing a full-POS feature race, not competing on price
-with Dotykačka, and not replacing Septim's till.
+**Anti-goals.** No full-POS feature race (no payments / table-map / receipts
+land-grab), no competing on price with the mass market, no replacing Septim's till.
+
+**How we'll know it's working (candidate measures).**
+- Allergen matrix maintained automatically, not in Word (time saved per venue).
+- Fewer allergen incidents / near-misses reported by pilot venues.
+- Waiter confidence: share of guests answered without a trip to the kitchen.
+- Attach rate as a POS add-on within the group's install base.
+
+**Naming note.** "Allergy Navigator" is the descriptive category name; **Forte**
+remains the product/brand name (keeps the Piano → pianoforte tie-in). Tagline
+candidate: *"Forte — your allergy navigator."*
+
 
 ---
 
