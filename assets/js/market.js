@@ -27,14 +27,23 @@ export const ICONS = {
   "ing-parmesan": "🧀",
 };
 
-// Named shocks that occasionally fire, for narrative colour.
-export const SCENARIOS = [
-  { label: "Dairy shortage — butter up", moves: [{ id: "ing-butter", pct: 0.15 }] },
-  { label: "Import costs — salmon up", moves: [{ id: "ing-salmon-fillet", pct: 0.12 }] },
-  { label: "Cheese prices climb", moves: [{ id: "ing-parmesan", pct: 0.16 }, { id: "ing-edam-cheese", pct: 0.12 }] },
-  { label: "Beef supply tight", moves: [{ id: "ing-beef-sirloin", pct: 0.1 }] },
-  { label: "Good harvest — oil down", moves: [{ id: "ing-oil", pct: -0.08 }] },
+// Curated market events. Each "Simulate market changes" click applies ONE event
+// (cycled deterministically so a demo is rehearsable) as a target multiplier
+// RELATIVE TO BASELINE. Applying relative to baseline makes the effect predictable
+// and decisive: a "salmon down" event reliably drops the salmon plate cost enough
+// to pull the dish out of the red, and "salmon up" pushes it deeper in.
+export const EVENTS = [
+  { label: "Norwegian glut \u2014 salmon down", set: { "ing-salmon-fillet": 0.78 } },
+  { label: "Dairy shortage \u2014 butter up", set: { "ing-butter": 1.3 } },
+  { label: "Cheese prices climb", set: { "ing-parmesan": 1.2, "ing-edam-cheese": 1.15 } },
+  { label: "Beef supply tight \u2014 beef up", set: { "ing-beef-sirloin": 1.2 } },
+  { label: "Salmon import spike \u2014 salmon up", set: { "ing-salmon-fillet": 1.18 } },
+  { label: "Good harvest \u2014 oil down", set: { "ing-oil": 0.8 } },
+  { label: "Cheap dairy \u2014 butter down", set: { "ing-butter": 0.78 } },
+  { label: "Beef glut \u2014 beef down", set: { "ing-beef-sirloin": 0.84 } },
 ];
+
+const FADE = 0.4; // each click, prices not touched by the event drift back toward baseline
 
 const CLAMP_LOW = 0.6; // never below 60% of baseline
 const CLAMP_HIGH = 1.6; // never above 160% of baseline
@@ -87,20 +96,34 @@ export function applyScenario(overlay, scenario) {
 }
 
 /**
- * Advance the market one step. Deterministic in (tick, seed): a shock may fire
- * with low probability. Returns { overlay, moves, event }.
+ * Advance the market one click. Deterministic in (tick, seed): event N is chosen
+ * by cycling EVENTS, applied relative to baseline; other volatile prices fade back
+ * toward baseline. Returns { overlay, moves, event }.
  */
 export function stepMarket(overlay, ingredients, tick, seed = 1) {
   const rng = makeRng((seed ^ (tick * 0x9e3779b1)) >>> 0);
-  let next = nextPrices(overlay, ingredients, rng);
-  let event = null;
-  if (rng() < 0.18) {
-    const scenario = SCENARIOS[Math.floor(rng() * SCENARIOS.length)];
-    next = applyScenario(next, scenario);
-    event = scenario.label;
+  const baseIdx = new Map(ingredients.map((i) => [i.id, latestPackPrice(i)]));
+  const event = EVENTS[(((tick - 1) % EVENTS.length) + EVENTS.length) % EVENTS.length];
+  const eventIds = new Set(Object.keys(event.set));
+
+  const next = { ...overlay };
+  // Fade previous swings back toward baseline, except what this event drives.
+  for (const id of Object.keys(VOLATILITY)) {
+    if (next[id] == null || eventIds.has(id)) continue;
+    const base = baseIdx.get(id);
+    next[id] = Math.round((next[id] + (base - next[id]) * FADE) * 100) / 100;
+  }
+  // Apply this event relative to baseline, with a little jitter, clamped to bounds.
+  for (const [id, mult] of Object.entries(event.set)) {
+    const base = baseIdx.get(id);
+    if (base == null) continue;
+    const jitter = 1 + (rng() * 2 - 1) * 0.02;
+    let p = base * mult * jitter;
+    p = Math.min(base * 1.6, Math.max(base * 0.6, p));
+    next[id] = Math.round(p * 100) / 100;
   }
   const moves = describeMoves(overlay, next, ingredients);
-  return { overlay: next, moves, event };
+  return { overlay: next, moves, event: event.label };
 }
 
 /** Diff two overlays into ticker-ready move descriptors for core ingredients. */

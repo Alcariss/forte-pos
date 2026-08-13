@@ -226,21 +226,26 @@ features:
           read-only JSON); the F2 engine recomputes from the overlay.
       - id: F5-R2
         text: >
-          Evolve prices as a bounded, mean-reverting random walk; only core
-          ingredients are volatile, staples stay flat.
+          Each click applies one curated market event as a target multiplier
+          relative to baseline (up or down), large enough to move a flagship dish
+          across its margin threshold; prices the event doesn't touch fade back
+          toward baseline.
       - id: F5-R3
-        text: Occasionally fire named shocks (e.g. "Dairy shortage — butter up").
+        text: >
+          Events are named (e.g. "Norwegian glut — salmon down") and cycle
+          deterministically so a rehearsed demo reproduces the same sequence.
       - id: F5-R4
         text: >
-          Be deterministic in (tick, seed) so a rehearsed demo reproduces the same
-          sequence (e.g. a second dish trips its alert at a known step).
+          The dashboard (tiles, alerts, cost table) is tied to the overlay and
+          recomputes on every click.
       - id: F5-R5
         text: >
           Framed as "Demo mode": a single "Simulate market changes" button advances
           one event per click, plus Reset and a market ticker strip.
     acceptance:
-      - Prices stay within clamp bounds over hundreds of ticks.
-      - A cheese-price shock tips Caesar from warn into a margin alert, then reverts.
+      - Prices stay within clamp bounds (0.6x..1.6x baseline).
+      - A "salmon down" event pulls the salmon dish out of the red; a later cheese
+        event tips Caesar into a margin alert.
 
 # ---------------------------------------------------------------------------
 # Explicitly out of scope for the prototype (roadmap only)
