@@ -70,11 +70,12 @@ Two thin "make it live" threads sit on top of the three core features:
   at the pass. State is cached in `localStorage`, so it survives reloads and even
   **syncs across two browser windows** (open `#waiter` and `#chef` side by side to
   fake a handheld → kitchen display).
-- **Market simulator** (Manager view) — Step/Play/Pause/Reset a bounded,
-  mean-reverting price walk with occasional named shocks. Food-cost %, margins,
-  and alerts recompute live. It's **deterministic** (fixed seed), so a rehearsed
-  demo repeats: press Step to tick 6 and a cheese shock tips a second dish into a
-  margin alert, then it reverts.
+- **Demo mode** (Manager view) — a single **“Simulate market changes”** button
+  advances a bounded, mean-reverting price walk with occasional named shocks
+  (dairy shortage, salmon import spike). Food-cost %, margins, and alerts recompute
+  live on each click. It's **deterministic** (fixed seed), so a rehearsed demo
+  repeats: click ~6 times and a cheese shock tips a second dish into a margin
+  alert, then it reverts. Reset returns prices to baseline.
 
 ## Project layout
 

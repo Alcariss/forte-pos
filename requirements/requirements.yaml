@@ -235,7 +235,9 @@ features:
           Be deterministic in (tick, seed) so a rehearsed demo reproduces the same
           sequence (e.g. a second dish trips its alert at a known step).
       - id: F5-R5
-        text: Manager controls — Step, Play/Pause, Reset — plus a market ticker strip.
+        text: >
+          Framed as "Demo mode": a single "Simulate market changes" button advances
+          one event per click, plus Reset and a market ticker strip.
     acceptance:
       - Prices stay within clamp bounds over hundreds of ticks.
       - A cheese-price shock tips Caesar from warn into a margin alert, then reverts.

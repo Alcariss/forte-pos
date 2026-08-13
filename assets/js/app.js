@@ -21,7 +21,6 @@ import { baselineOverlay, stepMarket, applyOverlay } from "./market.js";
 
 const STORAGE_KEY = "forte.demo.v1"; // namespaced + versioned demo cache
 const MARKET_SEED = 1; // deterministic market for rehearsable demos
-const MARKET_INTERVAL_MS = 3000;
 
 const state = {
   store: null,
@@ -32,10 +31,8 @@ const state = {
   wasteLog: [], // { recipe_id, qty, reason }
   order: emptyOrder(), // current draft order (waiter)
   tickets: [], // sent kitchen tickets (chef)
-  market: { overlay: null, tick: 0, running: false, lastMoves: [], lastEvent: null },
+  market: { overlay: null, tick: 0, lastMoves: [], lastEvent: null },
 };
-
-let marketTimer = null; // not persisted — each tab runs its own
 
 const root = () => document.getElementById("view");
 
@@ -625,7 +622,7 @@ function renderManager() {
     </section>`;
 }
 
-// Market simulator controls + ticker strip.
+// Demo mode — simulate real-world market events that move ingredient prices.
 function renderMarketPanel() {
   const m = state.market;
   const moves = m.lastMoves ?? [];
@@ -636,30 +633,26 @@ function renderMarketPanel() {
             `<span class="chip">${esc(mv.icon)} ${esc(mv.name)} <strong style="color:${mv.dir === "up" ? "var(--danger)" : "var(--safe)"}">${mv.dir === "up" ? "▲" : "▼"} ${pct(Math.abs(mv.pct), 1)}</strong></span>`,
         )
         .join("")
-    : `<span class="muted">Idle — press Step or Play to simulate market prices.</span>`;
+    : `<span class="muted">No changes yet — press “Simulate market changes” to see prices move.</span>`;
   const eventBadge = m.lastEvent ? `<span class="badge warn">📣 ${esc(m.lastEvent)}</span>` : "";
 
   return `
     <div class="card section">
-      <div class="view-title" style="margin-bottom:8px">
-        <h3 style="margin:0">Market simulator ${eventBadge}</h3>
+      <div class="view-title" style="margin-bottom:4px">
+        <h3 style="margin:0">Demo mode ${eventBadge}</h3>
         <span>
-          <button class="btn small" id="mkt-step">Step</button>
-          <button class="btn ${m.running ? "" : "primary"} small" id="mkt-play">${m.running ? "Pause" : "Play"}</button>
+          <button class="btn primary small" id="mkt-step">Simulate market changes</button>
           <button class="btn small" id="mkt-reset">Reset</button>
-          <span class="badge neutral" style="margin-left:6px">tick ${m.tick}</span>
+          <span class="badge neutral" style="margin-left:6px">event ${m.tick}</span>
         </span>
       </div>
+      <p class="muted" style="margin:0 0 10px">
+        Demo mode simulates real-world events — supplier price swings and shocks like a
+        dairy shortage or a salmon import spike. Each click advances the market and the
+        dashboard below recomputes food cost, margins, and alerts live.
+      </p>
       <div class="chips">${ticker}</div>
     </div>`;
-}
-
-function stopMarket() {
-  if (marketTimer) {
-    clearInterval(marketTimer);
-    marketTimer = null;
-  }
-  state.market.running = false;
 }
 
 function marketTick() {
@@ -684,21 +677,9 @@ function wireManager() {
       marketTick();
       if (state.role !== "manager") render();
     });
-  const play = root().querySelector("#mkt-play");
-  if (play)
-    play.addEventListener("click", () => {
-      if (state.market.running) {
-        stopMarket();
-      } else {
-        state.market.running = true;
-        marketTimer = setInterval(marketTick, MARKET_INTERVAL_MS);
-      }
-      render();
-    });
   const reset = root().querySelector("#mkt-reset");
   if (reset)
     reset.addEventListener("click", () => {
-      stopMarket();
       state.market.overlay = baselineOverlay(state.store.ingredients);
       state.market.tick = 0;
       state.market.lastMoves = [];
@@ -729,7 +710,6 @@ function render() {
 
 function setRole(role) {
   if (!VIEWS[role]) return;
-  if (role !== "manager") stopMarket(); // don't tick in the background off-dashboard
   state.role = role;
   if (location.hash.slice(1) !== role) location.hash = role; // deep-linkable roles
   render();
