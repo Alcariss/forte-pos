@@ -168,7 +168,93 @@ candidate: *"Forte — your allergy navigator."*
 
 ---
 
-## 6. Open questions
+## 6. Technology considerations
+
+How this actually has to run in a real kitchen and dining room. The guiding
+principle: **allergen safety is a life-safety path — it must keep working when the
+network doesn't.**
+
+### Form factor
+- **Waiter:** a handheld (phone-sized) device, used one-handed while standing at
+  the table. Big touch targets, glove/wet-hand friendly, readable in terrace
+  glare, all-day battery.
+- **Kitchen / pass:** a fixed tablet or screen (KDS-style) showing tickets with
+  allergen flags.
+- **Manager:** anything with a browser — tablet at the venue or laptop off-site.
+- Because Forte is a **layer, not a till**, it should ride on the hardware the
+  venue already has (Android handhelds à la Dotykačka/Storyous, Septim terminals)
+  and be delivered as a **web app / PWA** so it installs without app-store
+  friction and updates centrally. The prototype is deliberately plain web for
+  exactly this reason.
+
+### Connectivity model — offline-first, not cloud-dependent
+- **Reads must be 100% local.** Menu, recipes, ingredients and derived allergen
+  data are cached on the device. Looking up "does the svíčková contain milk",
+  filtering the menu, and generating the allergen matrix must work with the
+  network unplugged.
+- **Writes queue locally.** Orders and kitchen tickets are written to a local
+  store and sync opportunistically. The waiter never waits on a server round-trip
+  to take an order.
+- **LAN fallback.** Handheld → kitchen should work over the venue's **local
+  network** even when the internet (WAN) is down — via an on-prem hub (the main
+  till or a small local server) or device-to-device sync. Losing the ISP must not
+  stop food reaching the pass.
+- **Cloud is for sync, analytics and central menu management** — not for the
+  moment-to-moment safety lookup.
+
+### What happens when the internet drops
+- Nothing stops. The app shows a discreet **"Offline — using menu synced at
+  14:02"** banner and keeps taking orders from the local cache.
+- Tickets flow waiter → kitchen over LAN; everything reconciles to the cloud when
+  connectivity returns, with **last-writer / queue-order** conflict handling.
+- If only the WAN is down but LAN is up, the venue is fully operational. If even
+  LAN is down, each device still functions standalone on its last-synced data.
+
+### Restaurant realities we design for
+- **Crowded venues / peak service:** dozens of devices, congested Wi-Fi. Avoid a
+  cloud call per tap; do the work locally and sync in the background. Assume the
+  network is the bottleneck.
+- **Underground (Czech cellars/sklípky):** many pubs and beer halls are in
+  basements with **no cellular and weak Wi-Fi**. Cellular fallback can't be
+  assumed — the on-prem/LAN + on-device cache model is essential, not optional.
+- **Remote / rural:** intermittent, low-bandwidth WAN. Sync must be resilient to
+  drops and resumable; never block the UI on it.
+- **Festivals / pop-ups / gardens (the Storyous niche):** temporary networks,
+  thousands of transactions, patchy coverage across a site. Same offline-first
+  posture, plus tolerance for devices joining/leaving.
+
+### Fail-safe behaviour (bias to caution)
+- The system must **never present a dish as safe on stale or missing data.**
+- A brand-new or never-synced device shows **"allergen data unavailable — confirm
+  with the kitchen"** rather than a misleading "no allergens."
+- When an ingredient's allergen set changes centrally, the update is pushed with
+  priority and the device surfaces the new "as of" time so staff can trust
+  freshness. Safety changes propagate ahead of cosmetic ones.
+
+### Data freshness vs. availability
+- Hold **last-known-good** data on-device so the venue always has *something*
+  usable, but always show *when* it was synced.
+- Menu/recipe edits (including daily specials) publish to devices as soon as they
+  reconnect; a version stamp lets a device know it's behind.
+
+### Sync & architecture (as a plugin)
+- Source of truth for recipes/ingredients is the **host POS** (or the group's
+  backend). Forte syncs a read model from it and layers the derived-allergen
+  computation on top.
+- Preferred topology: **local hub** on the venue LAN that devices talk to, which
+  in turn syncs to cloud — gives offline resilience *and* central management.
+
+### Privacy & compliance
+- A guest's allergen profile is **health-adjacent personal data (GDPR).** Keep it
+  transient by default — scoped to the visit — and only persist "saved regulars"
+  with explicit consent.
+- Fiscal/receipt flows (**EET 2.0** from 2027) are a separate, regulated path with
+  its own offline-buffering requirements; Forte should stay out of that path and
+  let the host POS own it.
+
+---
+
+## 7. Open questions
 
 - Allergy **severity** (intolerance vs anaphylaxis) — should it change kitchen
   behaviour (dedicated prep, cross-contamination handling)?
@@ -182,7 +268,7 @@ candidate: *"Forte — your allergy navigator."*
 
 ---
 
-## 7. Raw user-interview snippets (imaginary)
+## 8. Raw user-interview snippets (imaginary)
 
 > Unedited feedback gathered from waiters trialling the tool. Raw material only —
 > **not yet acted upon.** Intended for a working session where we summarise the
