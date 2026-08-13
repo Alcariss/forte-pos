@@ -1,0 +1,3 @@
+# GitHub Pages serves this repo as static files.
+# The .nojekyll file disables Jekyll processing so folders/files
+# beginning with an underscore and our raw assets are served as-is.
