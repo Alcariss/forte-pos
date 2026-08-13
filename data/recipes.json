@@ -150,7 +150,7 @@
   },
   {
     "id": "rec-lemonade",
-    "name": "House lemonade 0.4l",
+    "name": "Homemade lemonade 0.4l",
     "category": "Drinks",
     "price_czk": 75,
     "target_food_cost_pct": 0.20,
