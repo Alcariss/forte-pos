@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Base — reset, typography, layout primitives
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--ivory);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 var(--s3);
+}
+
+h1 {
+  font-size: 1.9rem;
+}
+h2 {
+  font-size: 1.4rem;
+}
+h3 {
+  font-size: 1.1rem;
+}
+
+p {
+  margin: 0 0 var(--s3);
+}
+
+a {
+  color: var(--brass-deep);
+}
+
+/* Layout shell ------------------------------------------------------------ */
+.app-main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: var(--s5) var(--s4) var(--s7);
+}
+
+.view-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s4);
+  margin-bottom: var(--s5);
+  flex-wrap: wrap;
+}
+
+.view-title .subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Grids ------------------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: var(--s4);
+}
+.grid-tiles {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.grid-cards {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Utility ----------------------------------------------------------------- */
+.muted {
+  color: var(--muted);
+}
+.right {
+  text-align: right;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Focus visibility -------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}

@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Responsive — phone (waiter) → tablet (kitchen) → desktop (manager)
+   Breakpoints: 480 / 768 / 1024 px  (see requirements NFR)
+   ========================================================================== */
+
+/* Phone-first defaults are in base/components. Enhancements below. */
+
+@media (max-width: 560px) {
+  .app-main {
+    padding: var(--s4) var(--s3) var(--s7);
+  }
+  .brand {
+    font-size: 1.1rem;
+  }
+  .role-switch button {
+    padding: var(--s2);
+    font-size: 0.78rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .tile .tile-value {
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-two {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
