@@ -442,10 +442,10 @@ function renderTicketBoard() {
               <span class="row-title">${l.qty}× ${esc(l.name)}</span>
               ${
                 l.conflict
-                  ? `<span class="badge danger">⚠ guest avoids ${esc(
+                  ? `<span class="badge danger msg">⚠ guest avoids ${esc(
                       l.offending.map((c) => allergenIndex.get(c)?.name ?? c).join(", "),
                     )} — dish contains it</span>`
-                  : `<span class="badge safe">✓ ok for this guest</span>`
+                  : `<span class="badge safe msg">✓ ok for this guest</span>`
               }
             </div>
           </li>`,

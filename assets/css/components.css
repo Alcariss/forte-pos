@@ -151,6 +151,13 @@
   border-color: transparent;
 }
 
+/* Long message badges (e.g. kitchen ticket conflicts) wrap instead of overflowing */
+.badge.msg {
+  white-space: normal;
+  max-width: 100%;
+  align-items: flex-start;
+}
+
 /* Allergen chip ----------------------------------------------------------- */
 .chips {
   display: flex;
