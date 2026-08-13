@@ -1,0 +1,163 @@
+[
+  {
+    "id": "rec-schnitzel",
+    "name": "Wiener Schnitzel",
+    "category": "Mains",
+    "price_czk": 249,
+    "target_food_cost_pct": 0.32,
+    "diet_tags": [],
+    "components": [
+      { "ingredient_id": "ing-pork-loin", "qty": 200, "unit": "g" },
+      { "ingredient_id": "ing-flour", "qty": 40, "unit": "g" },
+      { "ingredient_id": "ing-egg", "qty": 1, "unit": "pcs" },
+      { "ingredient_id": "ing-breadcrumbs", "qty": 60, "unit": "g" },
+      { "ingredient_id": "ing-oil", "qty": 30, "unit": "ml" }
+    ]
+  },
+  {
+    "id": "rec-svickova",
+    "name": "Svíčková na smetaně",
+    "category": "Mains",
+    "price_czk": 265,
+    "target_food_cost_pct": 0.34,
+    "diet_tags": [],
+    "components": [
+      { "ingredient_id": "ing-beef-sirloin", "qty": 180, "unit": "g" },
+      { "ingredient_id": "ing-carrot", "qty": 50, "unit": "g" },
+      { "ingredient_id": "ing-celery-root", "qty": 40, "unit": "g" },
+      { "ingredient_id": "ing-onion", "qty": 30, "unit": "g" },
+      { "ingredient_id": "ing-cream", "qty": 100, "unit": "ml" },
+      { "ingredient_id": "ing-flour", "qty": 20, "unit": "g" },
+      { "ingredient_id": "ing-bread-dumpling", "qty": 150, "unit": "g" }
+    ]
+  },
+  {
+    "id": "rec-goulash",
+    "name": "Beef Goulash with dumplings",
+    "category": "Mains",
+    "price_czk": 229,
+    "target_food_cost_pct": 0.33,
+    "diet_tags": [],
+    "components": [
+      { "ingredient_id": "ing-beef-sirloin", "qty": 150, "unit": "g" },
+      { "ingredient_id": "ing-onion", "qty": 80, "unit": "g" },
+      { "ingredient_id": "ing-flour", "qty": 15, "unit": "g" },
+      { "ingredient_id": "ing-paprika-spice", "qty": 10, "unit": "g" },
+      { "ingredient_id": "ing-bread-dumpling", "qty": 150, "unit": "g" },
+      { "ingredient_id": "ing-oil", "qty": 20, "unit": "ml" }
+    ]
+  },
+  {
+    "id": "rec-fried-cheese",
+    "name": "Fried cheese with fries",
+    "category": "Mains",
+    "price_czk": 189,
+    "target_food_cost_pct": 0.30,
+    "diet_tags": ["vegetarian"],
+    "components": [
+      { "ingredient_id": "ing-edam-cheese", "qty": 150, "unit": "g" },
+      { "ingredient_id": "ing-flour", "qty": 40, "unit": "g" },
+      { "ingredient_id": "ing-egg", "qty": 1, "unit": "pcs" },
+      { "ingredient_id": "ing-breadcrumbs", "qty": 60, "unit": "g" },
+      { "ingredient_id": "ing-potato", "qty": 250, "unit": "g" },
+      { "ingredient_id": "ing-oil", "qty": 40, "unit": "ml" }
+    ]
+  },
+  {
+    "id": "rec-salmon",
+    "name": "Grilled salmon & potatoes",
+    "category": "Mains",
+    "price_czk": 269,
+    "target_food_cost_pct": 0.30,
+    "diet_tags": [],
+    "components": [
+      { "ingredient_id": "ing-salmon-fillet", "qty": 180, "unit": "g" },
+      { "ingredient_id": "ing-potato", "qty": 250, "unit": "g" },
+      { "ingredient_id": "ing-butter", "qty": 20, "unit": "g" },
+      { "ingredient_id": "ing-lemon", "qty": 0.25, "unit": "pcs" },
+      { "ingredient_id": "ing-oil", "qty": 10, "unit": "ml" }
+    ]
+  },
+  {
+    "id": "rec-lentil-curry",
+    "name": "Red lentil curry",
+    "category": "Mains",
+    "price_czk": 205,
+    "target_food_cost_pct": 0.28,
+    "diet_tags": ["vegan", "vegetarian"],
+    "components": [
+      { "ingredient_id": "ing-lentils", "qty": 120, "unit": "g" },
+      { "ingredient_id": "ing-coconut-milk", "qty": 150, "unit": "ml" },
+      { "ingredient_id": "ing-curry-paste", "qty": 30, "unit": "g" },
+      { "ingredient_id": "ing-onion", "qty": 50, "unit": "g" },
+      { "ingredient_id": "ing-carrot", "qty": 40, "unit": "g" },
+      { "ingredient_id": "ing-oil", "qty": 15, "unit": "ml" }
+    ]
+  },
+  {
+    "id": "rec-caesar",
+    "name": "Caesar salad",
+    "category": "Starters",
+    "price_czk": 175,
+    "target_food_cost_pct": 0.20,
+    "diet_tags": [],
+    "components": [
+      { "ingredient_id": "ing-romaine", "qty": 150, "unit": "g" },
+      { "ingredient_id": "ing-parmesan", "qty": 30, "unit": "g" },
+      { "ingredient_id": "ing-croutons", "qty": 40, "unit": "g" },
+      { "ingredient_id": "ing-caesar-dressing", "qty": 40, "unit": "ml" },
+      { "ingredient_id": "ing-anchovy", "qty": 10, "unit": "g" }
+    ]
+  },
+  {
+    "id": "rec-garlic-soup",
+    "name": "Garlic soup (Česnečka)",
+    "category": "Starters",
+    "price_czk": 89,
+    "target_food_cost_pct": 0.25,
+    "diet_tags": ["vegetarian"],
+    "components": [
+      { "ingredient_id": "ing-garlic", "qty": 15, "unit": "g" },
+      { "ingredient_id": "ing-onion", "qty": 20, "unit": "g" },
+      { "ingredient_id": "ing-potato", "qty": 60, "unit": "g" },
+      { "ingredient_id": "ing-croutons", "qty": 20, "unit": "g" },
+      { "ingredient_id": "ing-edam-cheese", "qty": 20, "unit": "g" },
+      { "ingredient_id": "ing-oil", "qty": 10, "unit": "ml" }
+    ]
+  },
+  {
+    "id": "rec-fries",
+    "name": "Fries",
+    "category": "Sides",
+    "price_czk": 59,
+    "target_food_cost_pct": 0.25,
+    "diet_tags": ["vegan", "vegetarian"],
+    "components": [
+      { "ingredient_id": "ing-potato", "qty": 200, "unit": "g" },
+      { "ingredient_id": "ing-oil", "qty": 30, "unit": "ml" }
+    ]
+  },
+  {
+    "id": "rec-pilsner",
+    "name": "Pilsner 0.5l",
+    "category": "Drinks",
+    "price_czk": 59,
+    "target_food_cost_pct": 0.48,
+    "diet_tags": [],
+    "components": [
+      { "ingredient_id": "ing-pilsner-keg", "qty": 500, "unit": "ml" }
+    ]
+  },
+  {
+    "id": "rec-lemonade",
+    "name": "House lemonade 0.4l",
+    "category": "Drinks",
+    "price_czk": 75,
+    "target_food_cost_pct": 0.20,
+    "diet_tags": ["vegan", "vegetarian"],
+    "components": [
+      { "ingredient_id": "ing-lemon", "qty": 0.5, "unit": "pcs" },
+      { "ingredient_id": "ing-sugar", "qty": 30, "unit": "g" }
+    ]
+  }
+]

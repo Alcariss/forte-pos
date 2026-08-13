@@ -1,0 +1,16 @@
+[
+  { "code": "1", "name": "Gluten", "icon": "🌾" },
+  { "code": "2", "name": "Crustaceans", "icon": "🦐" },
+  { "code": "3", "name": "Eggs", "icon": "🥚" },
+  { "code": "4", "name": "Fish", "icon": "🐟" },
+  { "code": "5", "name": "Peanuts", "icon": "🥜" },
+  { "code": "6", "name": "Soybeans", "icon": "🫘" },
+  { "code": "7", "name": "Milk", "icon": "🥛" },
+  { "code": "8", "name": "Tree nuts", "icon": "🌰" },
+  { "code": "9", "name": "Celery", "icon": "🌿" },
+  { "code": "10", "name": "Mustard", "icon": "🟡" },
+  { "code": "11", "name": "Sesame", "icon": "🫓" },
+  { "code": "12", "name": "Sulphites", "icon": "🍷" },
+  { "code": "13", "name": "Lupin", "icon": "🌼" },
+  { "code": "14", "name": "Molluscs", "icon": "🐚" }
+]

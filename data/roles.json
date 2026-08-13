@@ -1,0 +1,5 @@
+[
+  { "id": "role-waiter", "role": "waiter", "label": "Waiter", "name": "Tereza", "surface": "order", "hint": "Take orders and answer guest dietary questions." },
+  { "id": "role-chef", "role": "chef", "label": "Chef", "name": "Marek", "surface": "kitchen", "hint": "Prep the right amounts, keep allergens correct, log waste." },
+  { "id": "role-manager", "role": "manager", "label": "Manager", "name": "Jana", "surface": "dashboard", "hint": "Protect margin and cut waste with live numbers." }
+]

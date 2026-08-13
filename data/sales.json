@@ -1,0 +1,1850 @@
+[
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-schnitzel",
+    "qty": 18,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-svickova",
+    "qty": 13,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-goulash",
+    "qty": 12,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 11,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-salmon",
+    "qty": 8,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 6,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-caesar",
+    "qty": 6,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 10,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-fries",
+    "qty": 23,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-pilsner",
+    "qty": 66,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-16",
+    "recipe_id": "rec-lemonade",
+    "qty": 15,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-schnitzel",
+    "qty": 24,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-svickova",
+    "qty": 20,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-goulash",
+    "qty": 18,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 13,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-salmon",
+    "qty": 10,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 8,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-caesar",
+    "qty": 9,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 13,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-fries",
+    "qty": 29,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-pilsner",
+    "qty": 81,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-17",
+    "recipe_id": "rec-lemonade",
+    "qty": 21,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-schnitzel",
+    "qty": 26,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-svickova",
+    "qty": 22,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-goulash",
+    "qty": 18,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 13,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-salmon",
+    "qty": 11,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 8,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-caesar",
+    "qty": 11,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 12,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-fries",
+    "qty": 28,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-pilsner",
+    "qty": 78,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-18",
+    "recipe_id": "rec-lemonade",
+    "qty": 23,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-schnitzel",
+    "qty": 22,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-svickova",
+    "qty": 16,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-goulash",
+    "qty": 13,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 10,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-salmon",
+    "qty": 10,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 8,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-caesar",
+    "qty": 7,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 11,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-fries",
+    "qty": 25,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-pilsner",
+    "qty": 81,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-19",
+    "recipe_id": "rec-lemonade",
+    "qty": 15,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-schnitzel",
+    "qty": 13,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-svickova",
+    "qty": 13,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-goulash",
+    "qty": 10,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 9,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-salmon",
+    "qty": 6,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 4,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-caesar",
+    "qty": 5,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 7,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-fries",
+    "qty": 17,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-pilsner",
+    "qty": 45,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-20",
+    "recipe_id": "rec-lemonade",
+    "qty": 11,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-schnitzel",
+    "qty": 15,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-svickova",
+    "qty": 12,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-goulash",
+    "qty": 11,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 8,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-salmon",
+    "qty": 6,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-caesar",
+    "qty": 6,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 7,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-fries",
+    "qty": 18,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-pilsner",
+    "qty": 50,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-21",
+    "recipe_id": "rec-lemonade",
+    "qty": 11,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-schnitzel",
+    "qty": 14,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-svickova",
+    "qty": 14,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-goulash",
+    "qty": 12,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 10,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-salmon",
+    "qty": 7,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-caesar",
+    "qty": 6,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 7,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-fries",
+    "qty": 18,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-pilsner",
+    "qty": 49,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-22",
+    "recipe_id": "rec-lemonade",
+    "qty": 15,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-schnitzel",
+    "qty": 18,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-svickova",
+    "qty": 13,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-goulash",
+    "qty": 13,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 9,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-salmon",
+    "qty": 9,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 7,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-caesar",
+    "qty": 6,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 10,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-fries",
+    "qty": 23,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-pilsner",
+    "qty": 61,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-23",
+    "recipe_id": "rec-lemonade",
+    "qty": 13,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-schnitzel",
+    "qty": 21,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-svickova",
+    "qty": 19,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-goulash",
+    "qty": 16,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 13,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-salmon",
+    "qty": 12,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 9,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-caesar",
+    "qty": 10,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 13,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-fries",
+    "qty": 26,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-pilsner",
+    "qty": 76,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-24",
+    "recipe_id": "rec-lemonade",
+    "qty": 18,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-schnitzel",
+    "qty": 22,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-svickova",
+    "qty": 24,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-goulash",
+    "qty": 18,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 13,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-salmon",
+    "qty": 10,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 9,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-caesar",
+    "qty": 10,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 13,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-fries",
+    "qty": 28,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-pilsner",
+    "qty": 98,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-25",
+    "recipe_id": "rec-lemonade",
+    "qty": 21,
+    "weekday": 5
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-schnitzel",
+    "qty": 22,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-svickova",
+    "qty": 18,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-goulash",
+    "qty": 15,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 12,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-salmon",
+    "qty": 9,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 6,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-caesar",
+    "qty": 10,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 9,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-fries",
+    "qty": 25,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-pilsner",
+    "qty": 82,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-26",
+    "recipe_id": "rec-lemonade",
+    "qty": 19,
+    "weekday": 6
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-schnitzel",
+    "qty": 12,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-svickova",
+    "qty": 10,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-goulash",
+    "qty": 10,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 8,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-salmon",
+    "qty": 5,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-caesar",
+    "qty": 6,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 6,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-fries",
+    "qty": 15,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-pilsner",
+    "qty": 49,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-27",
+    "recipe_id": "rec-lemonade",
+    "qty": 11,
+    "weekday": 0
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-schnitzel",
+    "qty": 14,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-svickova",
+    "qty": 14,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-goulash",
+    "qty": 11,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 9,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-salmon",
+    "qty": 7,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-caesar",
+    "qty": 7,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 8,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-fries",
+    "qty": 17,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-pilsner",
+    "qty": 53,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-28",
+    "recipe_id": "rec-lemonade",
+    "qty": 14,
+    "weekday": 1
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-schnitzel",
+    "qty": 16,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-svickova",
+    "qty": 11,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-goulash",
+    "qty": 12,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 9,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-salmon",
+    "qty": 8,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-caesar",
+    "qty": 6,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 7,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-fries",
+    "qty": 16,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-pilsner",
+    "qty": 48,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-29",
+    "recipe_id": "rec-lemonade",
+    "qty": 14,
+    "weekday": 2
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-schnitzel",
+    "qty": 17,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-svickova",
+    "qty": 12,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-goulash",
+    "qty": 12,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 11,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-salmon",
+    "qty": 8,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 6,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-caesar",
+    "qty": 7,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 9,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-fries",
+    "qty": 18,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-pilsner",
+    "qty": 61,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-30",
+    "recipe_id": "rec-lemonade",
+    "qty": 17,
+    "weekday": 3
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-schnitzel",
+    "qty": 19,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-svickova",
+    "qty": 18,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-goulash",
+    "qty": 16,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 13,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-salmon",
+    "qty": 9,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 8,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-caesar",
+    "qty": 10,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 13,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-fries",
+    "qty": 29,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-pilsner",
+    "qty": 85,
+    "weekday": 4
+  },
+  {
+    "date": "2026-07-31",
+    "recipe_id": "rec-lemonade",
+    "qty": 20,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-schnitzel",
+    "qty": 21,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-svickova",
+    "qty": 23,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-goulash",
+    "qty": 16,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 14,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-salmon",
+    "qty": 12,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 8,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-caesar",
+    "qty": 11,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 13,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-fries",
+    "qty": 34,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-pilsner",
+    "qty": 103,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-01",
+    "recipe_id": "rec-lemonade",
+    "qty": 26,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-schnitzel",
+    "qty": 19,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-svickova",
+    "qty": 18,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-goulash",
+    "qty": 15,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 12,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-salmon",
+    "qty": 9,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 6,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-caesar",
+    "qty": 9,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 10,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-fries",
+    "qty": 21,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-pilsner",
+    "qty": 71,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-02",
+    "recipe_id": "rec-lemonade",
+    "qty": 18,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-schnitzel",
+    "qty": 11,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-svickova",
+    "qty": 12,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-goulash",
+    "qty": 9,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 8,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-salmon",
+    "qty": 7,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-caesar",
+    "qty": 6,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 6,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-fries",
+    "qty": 15,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-pilsner",
+    "qty": 43,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-03",
+    "recipe_id": "rec-lemonade",
+    "qty": 10,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-schnitzel",
+    "qty": 12,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-svickova",
+    "qty": 12,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-goulash",
+    "qty": 9,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 9,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-salmon",
+    "qty": 8,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 4,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-caesar",
+    "qty": 7,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 9,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-fries",
+    "qty": 17,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-pilsner",
+    "qty": 52,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-04",
+    "recipe_id": "rec-lemonade",
+    "qty": 11,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-schnitzel",
+    "qty": 16,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-svickova",
+    "qty": 12,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-goulash",
+    "qty": 10,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 8,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-salmon",
+    "qty": 7,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-caesar",
+    "qty": 7,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 7,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-fries",
+    "qty": 16,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-pilsner",
+    "qty": 54,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-05",
+    "recipe_id": "rec-lemonade",
+    "qty": 15,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-schnitzel",
+    "qty": 17,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-svickova",
+    "qty": 15,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-goulash",
+    "qty": 11,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 10,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-salmon",
+    "qty": 7,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 7,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-caesar",
+    "qty": 7,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 8,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-fries",
+    "qty": 22,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-pilsner",
+    "qty": 59,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-06",
+    "recipe_id": "rec-lemonade",
+    "qty": 15,
+    "weekday": 3
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-schnitzel",
+    "qty": 22,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-svickova",
+    "qty": 19,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-goulash",
+    "qty": 15,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 14,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-salmon",
+    "qty": 12,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 8,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-caesar",
+    "qty": 10,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 11,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-fries",
+    "qty": 24,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-pilsner",
+    "qty": 72,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-07",
+    "recipe_id": "rec-lemonade",
+    "qty": 20,
+    "weekday": 4
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-schnitzel",
+    "qty": 21,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-svickova",
+    "qty": 19,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-goulash",
+    "qty": 19,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 13,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-salmon",
+    "qty": 14,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 10,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-caesar",
+    "qty": 9,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 12,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-fries",
+    "qty": 34,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-pilsner",
+    "qty": 93,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-08",
+    "recipe_id": "rec-lemonade",
+    "qty": 24,
+    "weekday": 5
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-schnitzel",
+    "qty": 19,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-svickova",
+    "qty": 18,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-goulash",
+    "qty": 13,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 14,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-salmon",
+    "qty": 8,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 8,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-caesar",
+    "qty": 9,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 12,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-fries",
+    "qty": 23,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-pilsner",
+    "qty": 64,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-09",
+    "recipe_id": "rec-lemonade",
+    "qty": 20,
+    "weekday": 6
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-schnitzel",
+    "qty": 14,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-svickova",
+    "qty": 10,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-goulash",
+    "qty": 11,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 7,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-salmon",
+    "qty": 7,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-caesar",
+    "qty": 5,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 7,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-fries",
+    "qty": 16,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-pilsner",
+    "qty": 44,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-10",
+    "recipe_id": "rec-lemonade",
+    "qty": 11,
+    "weekday": 0
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-schnitzel",
+    "qty": 15,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-svickova",
+    "qty": 11,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-goulash",
+    "qty": 11,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 7,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-salmon",
+    "qty": 8,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-caesar",
+    "qty": 6,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 9,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-fries",
+    "qty": 20,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-pilsner",
+    "qty": 49,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-11",
+    "recipe_id": "rec-lemonade",
+    "qty": 13,
+    "weekday": 1
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-schnitzel",
+    "qty": 15,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-svickova",
+    "qty": 14,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-goulash",
+    "qty": 12,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-fried-cheese",
+    "qty": 8,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-salmon",
+    "qty": 8,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-lentil-curry",
+    "qty": 5,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-caesar",
+    "qty": 7,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-garlic-soup",
+    "qty": 9,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-fries",
+    "qty": 19,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-pilsner",
+    "qty": 46,
+    "weekday": 2
+  },
+  {
+    "date": "2026-08-12",
+    "recipe_id": "rec-lemonade",
+    "qty": 12,
+    "weekday": 2
+  }
+]

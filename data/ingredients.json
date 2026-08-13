@@ -1,0 +1,295 @@
+[
+  {
+    "id": "ing-pork-loin",
+    "name": "Pork loin",
+    "unit": "g",
+    "pack_price_czk": 750,
+    "pack_size": 5000,
+    "supplier_id": "sup-local-farm",
+    "allergens": [],
+    "price_history": [
+      { "date": "2026-07-01", "pack_price_czk": 720 },
+      { "date": "2026-08-01", "pack_price_czk": 750 }
+    ]
+  },
+  {
+    "id": "ing-beef-sirloin",
+    "name": "Beef sirloin",
+    "unit": "g",
+    "pack_price_czk": 900,
+    "pack_size": 3000,
+    "supplier_id": "sup-local-farm",
+    "allergens": [],
+    "price_history": [
+      { "date": "2026-07-01", "pack_price_czk": 870 },
+      { "date": "2026-08-01", "pack_price_czk": 900 }
+    ]
+  },
+  {
+    "id": "ing-salmon-fillet",
+    "name": "Salmon fillet",
+    "unit": "g",
+    "pack_price_czk": 900,
+    "pack_size": 2000,
+    "supplier_id": "sup-bidfood",
+    "allergens": ["4"],
+    "price_history": [
+      { "date": "2026-07-01", "pack_price_czk": 800 },
+      { "date": "2026-08-01", "pack_price_czk": 900 }
+    ]
+  },
+  {
+    "id": "ing-edam-cheese",
+    "name": "Edam cheese",
+    "unit": "g",
+    "pack_price_czk": 375,
+    "pack_size": 2500,
+    "supplier_id": "sup-makro",
+    "allergens": ["7"],
+    "price_history": []
+  },
+  {
+    "id": "ing-flour",
+    "name": "Wheat flour",
+    "unit": "g",
+    "pack_price_czk": 200,
+    "pack_size": 10000,
+    "supplier_id": "sup-makro",
+    "allergens": ["1"],
+    "price_history": []
+  },
+  {
+    "id": "ing-egg",
+    "name": "Egg",
+    "unit": "pcs",
+    "pack_price_czk": 120,
+    "pack_size": 30,
+    "supplier_id": "sup-local-farm",
+    "allergens": ["3"],
+    "price_history": []
+  },
+  {
+    "id": "ing-breadcrumbs",
+    "name": "Breadcrumbs",
+    "unit": "g",
+    "pack_price_czk": 150,
+    "pack_size": 5000,
+    "supplier_id": "sup-makro",
+    "allergens": ["1"],
+    "price_history": []
+  },
+  {
+    "id": "ing-butter",
+    "name": "Butter",
+    "unit": "g",
+    "pack_price_czk": 180,
+    "pack_size": 1000,
+    "supplier_id": "sup-makro",
+    "allergens": ["7"],
+    "price_history": [
+      { "date": "2026-06-01", "pack_price_czk": 150 },
+      { "date": "2026-07-01", "pack_price_czk": 160 },
+      { "date": "2026-08-01", "pack_price_czk": 180 }
+    ]
+  },
+  {
+    "id": "ing-cream",
+    "name": "Cooking cream",
+    "unit": "ml",
+    "pack_price_czk": 90,
+    "pack_size": 1000,
+    "supplier_id": "sup-makro",
+    "allergens": ["7"],
+    "price_history": []
+  },
+  {
+    "id": "ing-onion",
+    "name": "Onion",
+    "unit": "g",
+    "pack_price_czk": 120,
+    "pack_size": 10000,
+    "supplier_id": "sup-local-farm",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-garlic",
+    "name": "Garlic",
+    "unit": "g",
+    "pack_price_czk": 90,
+    "pack_size": 1000,
+    "supplier_id": "sup-local-farm",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-carrot",
+    "name": "Carrot",
+    "unit": "g",
+    "pack_price_czk": 75,
+    "pack_size": 5000,
+    "supplier_id": "sup-local-farm",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-celery-root",
+    "name": "Celery root",
+    "unit": "g",
+    "pack_price_czk": 90,
+    "pack_size": 3000,
+    "supplier_id": "sup-local-farm",
+    "allergens": ["9"],
+    "price_history": []
+  },
+  {
+    "id": "ing-potato",
+    "name": "Potato",
+    "unit": "g",
+    "pack_price_czk": 250,
+    "pack_size": 25000,
+    "supplier_id": "sup-local-farm",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-bread-dumpling",
+    "name": "Bread dumpling",
+    "unit": "g",
+    "pack_price_czk": 200,
+    "pack_size": 5000,
+    "supplier_id": "sup-bidfood",
+    "allergens": ["1", "3", "7"],
+    "price_history": []
+  },
+  {
+    "id": "ing-lentils",
+    "name": "Red lentils",
+    "unit": "g",
+    "pack_price_czk": 200,
+    "pack_size": 5000,
+    "supplier_id": "sup-makro",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-coconut-milk",
+    "name": "Coconut milk",
+    "unit": "ml",
+    "pack_price_czk": 70,
+    "pack_size": 1000,
+    "supplier_id": "sup-makro",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-curry-paste",
+    "name": "Red curry paste",
+    "unit": "g",
+    "pack_price_czk": 120,
+    "pack_size": 500,
+    "supplier_id": "sup-bidfood",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-romaine",
+    "name": "Romaine lettuce",
+    "unit": "g",
+    "pack_price_czk": 80,
+    "pack_size": 2000,
+    "supplier_id": "sup-local-farm",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-parmesan",
+    "name": "Parmesan",
+    "unit": "g",
+    "pack_price_czk": 400,
+    "pack_size": 1000,
+    "supplier_id": "sup-makro",
+    "allergens": ["7"],
+    "price_history": []
+  },
+  {
+    "id": "ing-anchovy",
+    "name": "Anchovy",
+    "unit": "g",
+    "pack_price_czk": 120,
+    "pack_size": 200,
+    "supplier_id": "sup-bidfood",
+    "allergens": ["4"],
+    "price_history": []
+  },
+  {
+    "id": "ing-croutons",
+    "name": "Croutons",
+    "unit": "g",
+    "pack_price_czk": 90,
+    "pack_size": 1000,
+    "supplier_id": "sup-makro",
+    "allergens": ["1"],
+    "price_history": []
+  },
+  {
+    "id": "ing-caesar-dressing",
+    "name": "Caesar dressing",
+    "unit": "ml",
+    "pack_price_czk": 150,
+    "pack_size": 1000,
+    "supplier_id": "sup-bidfood",
+    "allergens": ["3", "4", "10"],
+    "price_history": []
+  },
+  {
+    "id": "ing-lemon",
+    "name": "Lemon",
+    "unit": "pcs",
+    "pack_price_czk": 100,
+    "pack_size": 20,
+    "supplier_id": "sup-makro",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-sugar",
+    "name": "Sugar",
+    "unit": "g",
+    "pack_price_czk": 150,
+    "pack_size": 10000,
+    "supplier_id": "sup-makro",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-oil",
+    "name": "Sunflower oil",
+    "unit": "ml",
+    "pack_price_czk": 400,
+    "pack_size": 10000,
+    "supplier_id": "sup-makro",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-paprika-spice",
+    "name": "Paprika (spice)",
+    "unit": "g",
+    "pack_price_czk": 300,
+    "pack_size": 1000,
+    "supplier_id": "sup-makro",
+    "allergens": [],
+    "price_history": []
+  },
+  {
+    "id": "ing-pilsner-keg",
+    "name": "Pilsner (keg)",
+    "unit": "ml",
+    "pack_price_czk": 2500,
+    "pack_size": 50000,
+    "supplier_id": "sup-plzensky",
+    "allergens": ["1"],
+    "price_history": []
+  }
+]
