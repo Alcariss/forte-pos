@@ -28,6 +28,7 @@ const state = {
   role: "waiter",
   avoid: new Set(), // allergen codes the guest avoids (= guest profile)
   diets: new Set(), // required diet tags (= guest profile)
+  guest: null, // simulated walk-in { name, avatar, avoid: [] } — NOT auto-applied to the filter
   prepWeekday: tomorrowWeekday(),
   order: emptyOrder(), // current draft order (waiter)
   tickets: [], // sent kitchen tickets (chef)
@@ -54,6 +55,7 @@ function persist() {
       JSON.stringify({
         avoid: [...state.avoid],
         diets: [...state.diets],
+        guest: state.guest,
         order: state.order,
         tickets: state.tickets,
         market: { overlay: state.market.overlay, tick: state.market.tick },
@@ -75,6 +77,7 @@ function hydrate() {
   suppressSave = true;
   state.avoid = new Set(saved.avoid ?? []);
   state.diets = new Set(saved.diets ?? []);
+  state.guest = saved.guest ?? null;
   state.order = saved.order ?? emptyOrder();
   state.tickets = saved.tickets ?? [];
   if (saved.market?.overlay) {
@@ -209,18 +212,60 @@ function renderWaiter() {
     ${menuHtml}`;
 }
 
-// Demo mode — spin up a random guest with up to 3 allergies to exercise the filter.
+// Demo mode — a walk-in guest states their allergies; the waiter reacts by
+// selecting them in the filter. We do NOT auto-apply the filter.
+const GUEST_AVATARS = ["🧑", "👩", "👨", "🧓", "👵", "🧑‍🦱", "👩‍🦰", "👨‍🦳", "👱", "🧕"];
+const GUEST_NAMES = ["Petr", "Jana", "Eva", "Tomáš", "Lucie", "Martin", "Klára", "Ondřej", "Nikola", "Adéla"];
+
+function makeGuest() {
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const g = randomGuestProfile(state.store.allergens.map((a) => a.code));
+  return { name: pick(GUEST_NAMES), avatar: pick(GUEST_AVATARS), avoid: g.avoid };
+}
+
 function renderGuestDemoPanel() {
+  const g = state.guest;
+  const { allergenIndex } = state.store;
+
+  let body;
+  if (!g) {
+    body = `<p class="muted" style="margin:0">
+        Press “New random guest” to simulate a walk-in who tells you their allergies.
+        Then record those allergens in the filter below to see what they can eat.
+      </p>`;
+  } else {
+    const chips = g.avoid
+      .map((c) => {
+        const a = allergenIndex.get(c);
+        return `<span class="chip">${esc(a?.icon ?? "")} ${esc(a?.name ?? c)}</span>`;
+      })
+      .join("");
+    const missing = g.avoid.filter((c) => !state.avoid.has(c));
+    const hint = missing.length
+      ? `<span class="badge warn">Record in the filter: ${esc(
+          missing.map((c) => allergenIndex.get(c)?.name ?? c).join(", "),
+        )}</span>`
+      : `<span class="badge safe">✓ Filter matches ${esc(g.name)} — the menu shows what they can eat</span>`;
+    body = `
+      <div class="row" style="align-items:flex-start">
+        <div class="row-main">
+          <span class="row-title" style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:1.8rem;line-height:1">${g.avatar}</span> ${esc(g.name)}
+          </span>
+          <span class="muted">“Hi — I'm allergic to:”</span>
+          <span class="chips" style="margin-top:6px">${chips}</span>
+        </div>
+        <div class="right">${hint}</div>
+      </div>`;
+  }
+
   return `
     <div class="card section">
-      <div class="view-title" style="margin-bottom:4px">
+      <div class="view-title" style="margin-bottom:8px">
         <h3 style="margin:0">Demo mode</h3>
         <button class="btn primary small" id="guest-demo">New random guest</button>
       </div>
-      <p class="muted" style="margin:0">
-        Demo mode invents a walk-in guest with a random allergy (up to 3 allergens).
-        Their profile fills the guest filter below and travels with the order to the kitchen.
-      </p>
+      ${body}
     </div>`;
 }
 
@@ -314,9 +359,7 @@ function wireWaiter() {
   const guestDemo = root().querySelector("#guest-demo");
   if (guestDemo)
     guestDemo.addEventListener("click", () => {
-      const g = randomGuestProfile(state.store.allergens.map((a) => a.code));
-      state.avoid = new Set(g.avoid);
-      state.diets = new Set(g.diets);
+      state.guest = makeGuest(); // show who walked in; the waiter records allergens manually
       persist();
       render();
     });

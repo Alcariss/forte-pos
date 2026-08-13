@@ -209,8 +209,10 @@ features:
           deep-links, and syncs across two tabs (handheld -> kitchen display).
       - id: F4-R5
         text: >
-          Waiter "Demo mode": generate a random walk-in guest with 1..3 unique
-          allergens that fills the guest filter and flows into the order.
+          Waiter "Demo mode": generate a random walk-in guest (avatar, name, and
+          1..3 unique allergens) shown as a card. The waiter records the allergens
+          in the filter manually — no auto-selection — then the menu shows suitable
+          dishes.
     acceptance:
       - Adding a gluten dish to a "no gluten" order flags a conflict on the ticket.
       - The guest profile on a sent ticket is immutable to later filter changes.

@@ -64,9 +64,10 @@ surfaces without authentication. Each is also deep-linkable via the URL hash:
 
 Three "make it live" threads sit on top of the core features:
 
-- **Waiter Demo mode** — “New random guest” invents a walk-in with 1–3 random
-  allergies, fills the guest filter, and that profile travels with the order to
-  the kitchen.
+- **Waiter Demo mode** — “New random guest” simulates a walk-in who *tells you*
+  their allergies: a guest card shows an avatar, name, and their 1–3 allergens.
+  Nothing is auto-selected — the waiter reacts by recording those allergens in the
+  filter, and the menu then shows what the guest can eat.
 - **Allergen-aware order thread** — the waiter builds an order carrying the
   guest's allergen profile and sends it to the kitchen. The Chef ticket flags any
   line whose dish contains an allergen the guest asked to avoid — the safety net
