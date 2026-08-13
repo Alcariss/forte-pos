@@ -56,9 +56,25 @@ surfaces without authentication. Each is also deep-linkable via the URL hash:
 
 | Role      | Route       | Sees                                                        |
 |-----------|-------------|-------------------------------------------------------------|
-| Waiter    | `#waiter`   | Order screen with guest allergen/diet filter                |
-| Chef      | `#chef`     | Prep list, waste logging, kitchen allergen matrix           |
-| Manager   | `#manager`  | Food-cost dashboard, margins, margin alerts, waste reports  |
+| Waiter    | `#waiter`   | Order screen with guest allergen/diet filter + a live order |
+| Chef      | `#chef`     | Kitchen ticket board (allergen conflicts flagged), prep list, waste, allergen matrix |
+| Manager   | `#manager`  | Food-cost dashboard with a live market simulator, margin alerts, waste |
+
+## Demo features
+
+Two thin "make it live" threads sit on top of the three core features:
+
+- **Allergen-aware order thread** — the waiter builds an order carrying the
+  guest's allergen profile and sends it to the kitchen. The Chef ticket flags any
+  line whose dish contains an allergen the guest asked to avoid — the safety net
+  at the pass. State is cached in `localStorage`, so it survives reloads and even
+  **syncs across two browser windows** (open `#waiter` and `#chef` side by side to
+  fake a handheld → kitchen display).
+- **Market simulator** (Manager view) — Step/Play/Pause/Reset a bounded,
+  mean-reverting price walk with occasional named shocks. Food-cost %, margins,
+  and alerts recompute live. It's **deterministic** (fixed seed), so a rehearsed
+  demo repeats: press Step to tick 6 and a cheese shock tips a second dish into a
+  margin alert, then it reverts.
 
 ## Project layout
 

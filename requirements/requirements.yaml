@@ -183,15 +183,73 @@ features:
       - Forecast for a weekday equals the moving average of that weekday's sales.
       - Waste value equals qty x plate cost from the food cost engine.
 
+  - id: F4
+    name: Allergen-aware order thread (demo slice)
+    priority: should
+    module: assets/js/order.js
+    tests: tests/order.test.js
+    rationale: >
+      A deliberately thin order flow whose only purpose is to carry the guest's
+      allergen profile to the pass. NOT a general POS ordering system — it exists
+      to make the F1 wedge tangible: allergen safety follows the order.
+    requirements:
+      - id: F4-R1
+        text: Build a draft order of dishes with quantities (add / step / remove).
+      - id: F4-R2
+        text: >
+          Snapshot the order plus the current guest allergen profile into an
+          immutable kitchen ticket ("send to kitchen").
+      - id: F4-R3
+        text: >
+          On the kitchen ticket, flag any line whose dish contains an allergen the
+          guest asked to avoid (the safety net that catches a mis-keyed order).
+      - id: F4-R4
+        text: >
+          Persist order + tickets to localStorage so the demo survives reloads,
+          deep-links, and syncs across two tabs (handheld -> kitchen display).
+    acceptance:
+      - Adding a gluten dish to a "no gluten" order flags a conflict on the ticket.
+      - The guest profile on a sent ticket is immutable to later filter changes.
+
+  - id: F5
+    name: Market change generator (demo slice)
+    priority: should
+    module: assets/js/market.js
+    tests: tests/market.test.js
+    rationale: >
+      Makes the F2 "real-time" claim visibly move: simulated ingredient prices
+      drive live recompute of food cost %, margins, and alerts on the dashboard.
+    requirements:
+      - id: F5-R1
+        text: >
+          Maintain a price OVERLAY over the seed ingredients (never mutate the
+          read-only JSON); the F2 engine recomputes from the overlay.
+      - id: F5-R2
+        text: >
+          Evolve prices as a bounded, mean-reverting random walk; only core
+          ingredients are volatile, staples stay flat.
+      - id: F5-R3
+        text: Occasionally fire named shocks (e.g. "Dairy shortage — butter up").
+      - id: F5-R4
+        text: >
+          Be deterministic in (tick, seed) so a rehearsed demo reproduces the same
+          sequence (e.g. a second dish trips its alert at a known step).
+      - id: F5-R5
+        text: Manager controls — Step, Play/Pause, Reset — plus a market ticker strip.
+    acceptance:
+      - Prices stay within clamp bounds over hundreds of ticks.
+      - A cheese-price shock tips Caesar from warn into a margin alert, then reverts.
+
 # ---------------------------------------------------------------------------
 # Explicitly out of scope for the prototype (roadmap only)
 # ---------------------------------------------------------------------------
 out_of_scope:
   - Qerko pay-at-table integration (hard to mock without payment infra)
+  - Payments, table map, receipts, discounts, order history (F4 is a thin slice only)
   - Staff scheduling & labour-law compliance (separate complex domain)
   - Unified multi-channel menu publishing (Wolt/Bolt/Foodora APIs)
   - Real authentication (roles are hard-coded and switchable in the UI)
-  - Persistence beyond the browser session (JSON is read-only seed data)
+  - Server-side persistence (demo state lives in localStorage only)
 
 # ---------------------------------------------------------------------------
 # Non-functional requirements
