@@ -4,8 +4,8 @@
 import { loadStore } from "./data.js";
 import { esc, czk, pct, WEEKDAYS, tomorrowWeekday, statusClass } from "./ui.js";
 import { classifyRecipe, matchesDiet, allergenMatrix } from "./allergens.js";
-import { analyzeMenu, marginAlerts } from "./foodcost.js";
-import { buildPrepList, summariseWaste } from "./prep.js";
+import { analyzeMenu } from "./foodcost.js";
+import { buildPrepList } from "./prep.js";
 import {
   emptyOrder,
   addLine,
@@ -15,6 +15,7 @@ import {
   orderTotal,
   createTicket,
   annotateTicket,
+  randomGuestProfile,
 } from "./order.js";
 import { indexIngredients } from "./allergens.js";
 import { baselineOverlay, stepMarket, applyOverlay } from "./market.js";
@@ -28,7 +29,6 @@ const state = {
   avoid: new Set(), // allergen codes the guest avoids (= guest profile)
   diets: new Set(), // required diet tags (= guest profile)
   prepWeekday: tomorrowWeekday(),
-  wasteLog: [], // { recipe_id, qty, reason }
   order: emptyOrder(), // current draft order (waiter)
   tickets: [], // sent kitchen tickets (chef)
   market: { overlay: null, tick: 0, lastMoves: [], lastEvent: null },
@@ -194,6 +194,7 @@ function renderWaiter() {
         <div class="subtitle">Answer "what can I eat?" with confidence — allergens come straight from the recipes.</div>
       </div>
     </div>
+    ${renderGuestDemoPanel()}
     <div class="card section">
       <h3>Guest filter</h3>
       <p class="muted" style="margin-top:-4px">Avoid allergens</p>
@@ -206,6 +207,21 @@ function renderWaiter() {
     </div>
     ${renderOrderPanel()}
     ${menuHtml}`;
+}
+
+// Demo mode — spin up a random guest with up to 3 allergies to exercise the filter.
+function renderGuestDemoPanel() {
+  return `
+    <div class="card section">
+      <div class="view-title" style="margin-bottom:4px">
+        <h3 style="margin:0">Demo mode</h3>
+        <button class="btn primary small" id="guest-demo">New random guest</button>
+      </div>
+      <p class="muted" style="margin:0">
+        Demo mode invents a walk-in guest with a random allergy (up to 3 allergens).
+        Their profile fills the guest filter below and travels with the order to the kitchen.
+      </p>
+    </div>`;
 }
 
 // Order panel — the draft ticket the waiter is building.
@@ -291,6 +307,16 @@ function wireWaiter() {
     clear.addEventListener("click", () => {
       state.avoid.clear();
       state.diets.clear();
+      persist();
+      render();
+    });
+
+  const guestDemo = root().querySelector("#guest-demo");
+  if (guestDemo)
+    guestDemo.addEventListener("click", () => {
+      const g = randomGuestProfile(state.store.allergens.map((a) => a.code));
+      state.avoid = new Set(g.avoid);
+      state.diets = new Set(g.diets);
       persist();
       render();
     });
@@ -405,7 +431,7 @@ function renderTicketBoard() {
 }
 
 function renderChef() {
-  const { recipes, ingredientIndex, sales, allergens, recipeIndex } = state.store;
+  const { recipes, ingredientIndex, sales, allergens } = state.store;
   const prep = buildPrepList(recipes, ingredientIndex, sales, { weekday: state.prepWeekday });
 
   const weekdayOptions = WEEKDAYS.map(
@@ -444,20 +470,11 @@ function renderChef() {
     )
     .join("");
 
-  const wasteOptions = recipes.map((r) => `<option value="${r.id}">${esc(r.name)}</option>`).join("");
-  const valuedWaste = summariseWaste(state.wasteLog, recipeIndex, ingredientIndex);
-  const wasteRows = valuedWaste.byItem
-    .map(
-      (w) =>
-        `<tr><td>${esc(recipeIndex.get(w.recipe_id)?.name ?? w.recipe_id)}</td><td class="right">${w.qty}</td><td class="right">${czk(w.costCzk)}</td></tr>`,
-    )
-    .join("");
-
   return `
     <div class="view-title">
       <div>
         <h1>Kitchen</h1>
-        <div class="subtitle">Prep the right amount, keep the allergen matrix correct, log what you waste.</div>
+        <div class="subtitle">Prep the right amount and keep the allergen matrix correct.</div>
       </div>
     </div>
 
@@ -495,29 +512,6 @@ function renderChef() {
         </table>
       </div>
       <p class="muted">Columns are the 14 EU allergens. Values are derived from ingredients, so this is always current.</p>
-    </section>
-
-    <section class="section">
-      <h2>Log waste</h2>
-      <div class="card">
-        <div class="filter-group" style="align-items:center">
-          <select id="waste-item" class="btn small">${wasteOptions}</select>
-          <input id="waste-qty" class="btn small" type="number" min="1" value="1" style="width:80px" />
-          <input id="waste-reason" class="btn small" type="text" placeholder="reason (optional)" />
-          <button id="waste-add" class="btn primary small">Log waste</button>
-        </div>
-        ${
-          state.wasteLog.length
-            ? `<div class="table-wrap" style="margin-top:12px">
-                 <table class="data">
-                   <thead><tr><th>Dish</th><th class="right">Qty</th><th class="right">Cost</th></tr></thead>
-                   <tbody>${wasteRows}</tbody>
-                   <tfoot><tr><td><strong>Total</strong></td><td></td><td class="right"><strong>${czk(valuedWaste.totalCzk)}</strong></td></tr></tfoot>
-                 </table>
-               </div>`
-            : `<p class="muted" style="margin-top:12px">No waste logged this session.</p>`
-        }
-      </div>
     </section>`;
 }
 
@@ -526,15 +520,6 @@ function wireChef() {
   if (sel)
     sel.addEventListener("change", () => {
       state.prepWeekday = Number(sel.value);
-      render();
-    });
-  const add = root().querySelector("#waste-add");
-  if (add)
-    add.addEventListener("click", () => {
-      const recipe_id = root().querySelector("#waste-item").value;
-      const qty = Math.max(1, Number(root().querySelector("#waste-qty").value) || 1);
-      const reason = root().querySelector("#waste-reason").value.trim();
-      state.wasteLog.push({ recipe_id, qty, reason });
       render();
     });
   root()
@@ -552,37 +537,11 @@ function wireChef() {
 // --- MANAGER: food-cost dashboard -------------------------------------------
 
 function renderManager() {
-  const { recipes, recipeIndex } = state.store;
+  const { recipes } = state.store;
   const ingredientIndex = pricedIndex(); // F2 recomputes from the live market overlay
   const menu = analyzeMenu(recipes, ingredientIndex);
-  const alerts = marginAlerts(recipes, ingredientIndex);
-  const avgFc = menu.reduce((a, m) => a + m.foodCostPct, 0) / menu.length;
-  const waste = summariseWaste(state.wasteLog, recipeIndex, ingredientIndex);
-
-  const tiles = `
-    <div class="grid grid-tiles dashboard-grid section">
-      <div class="tile"><div class="tile-label">Menu items</div><div class="tile-value">${recipes.length}</div></div>
-      <div class="tile ${avgFc > 0.33 ? "is-warn" : "is-safe"}"><div class="tile-label">Avg food cost</div><div class="tile-value">${pct(avgFc)}</div></div>
-      <div class="tile ${alerts.length ? "is-danger" : "is-safe"}"><div class="tile-label">Margin alerts</div><div class="tile-value">${alerts.length}</div></div>
-      <div class="tile ${waste.totalCzk ? "is-warn" : "is-safe"}"><div class="tile-label">Waste (session)</div><div class="tile-value">${czk(waste.totalCzk)}</div></div>
-    </div>`;
 
   const marketPanel = renderMarketPanel();
-
-  const alertHtml = alerts.length
-    ? `<ul class="row-list">${alerts
-        .map(
-          (a) => `
-          <li class="row">
-            <div class="row-main">
-              <span class="row-title">${esc(a.recipe.name)}</span>
-              <span class="muted">food cost ${pct(a.foodCostPct, 1)} vs target ${pct(a.target, 0)}</span>
-            </div>
-            <span class="badge danger">margin below target</span>
-          </li>`,
-        )
-        .join("")}</ul>`
-    : `<div class="empty">No dishes are below target margin. 🎯</div>`;
 
   const costRows = menu
     .map(
@@ -606,11 +565,6 @@ function renderManager() {
       </div>
     </div>
     ${marketPanel}
-    ${tiles}
-    <section class="section">
-      <h2>Margin alerts</h2>
-      ${alertHtml}
-    </section>
     <section class="section">
       <h2>Food cost by dish</h2>
       <div class="table-wrap">

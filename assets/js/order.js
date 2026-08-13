@@ -78,3 +78,19 @@ export function annotateTicket(ticket, recipeIndex, ingredientIndex) {
   });
   return { ...ticket, lines, hasConflict: lines.some((l) => l.conflict) };
 }
+
+/**
+ * Generate a random guest profile for the waiter demo: 1..maxAllergens unique
+ * allergen codes drawn from the supplied pool. `rng` is injectable for testing.
+ */
+export function randomGuestProfile(allergenCodes, rng = Math.random, maxAllergens = 3) {
+  const pool = [...allergenCodes];
+  const count = Math.min(pool.length, 1 + Math.floor(rng() * maxAllergens));
+  const avoid = [];
+  for (let i = 0; i < count && pool.length; i++) {
+    const idx = Math.floor(rng() * pool.length);
+    avoid.push(pool.splice(idx, 1)[0]);
+  }
+  avoid.sort((a, b) => Number(a) - Number(b));
+  return { avoid, diets: [] };
+}

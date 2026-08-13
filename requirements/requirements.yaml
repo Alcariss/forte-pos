@@ -207,9 +207,14 @@ features:
         text: >
           Persist order + tickets to localStorage so the demo survives reloads,
           deep-links, and syncs across two tabs (handheld -> kitchen display).
+      - id: F4-R5
+        text: >
+          Waiter "Demo mode": generate a random walk-in guest with 1..3 unique
+          allergens that fills the guest filter and flows into the order.
     acceptance:
       - Adding a gluten dish to a "no gluten" order flags a conflict on the ticket.
       - The guest profile on a sent ticket is immutable to later filter changes.
+      - A generated guest has between 1 and 3 unique, valid allergen codes.
 
   - id: F5
     name: Market change generator (demo slice)
@@ -253,6 +258,8 @@ features:
 out_of_scope:
   - Qerko pay-at-table integration (hard to mock without payment infra)
   - Payments, table map, receipts, discounts, order history (F4 is a thin slice only)
+  - Waste logging UI and manager summary tiles/margin-alerts panel (removed to keep
+    the demo focused; the F2/F3 logic and tests are retained)
   - Staff scheduling & labour-law compliance (separate complex domain)
   - Unified multi-channel menu publishing (Wolt/Bolt/Foodora APIs)
   - Real authentication (roles are hard-coded and switchable in the UI)

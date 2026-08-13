@@ -14,6 +14,7 @@ import {
   orderTotal,
   createTicket,
   annotateTicket,
+  randomGuestProfile,
 } from "../assets/js/order.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -78,4 +79,21 @@ test("annotateTicket marks a safe dish as no conflict", () => {
   const annotated = annotateTicket(ticket, recipeIndex, idx);
   assert.equal(annotated.hasConflict, false);
   assert.equal(annotated.lines[0].conflict, false);
+});
+
+test("randomGuestProfile returns 1..3 unique valid allergen codes", () => {
+  const codes = ["1", "2", "3", "4", "5", "6", "7"];
+  let seq = [0.99, 0.5, 0.1, 0.8, 0.3]; // drives count then picks
+  let i = 0;
+  const rng = () => seq[i++ % seq.length];
+  const g = randomGuestProfile(codes, rng, 3);
+  assert.ok(g.avoid.length >= 1 && g.avoid.length <= 3);
+  assert.equal(new Set(g.avoid).size, g.avoid.length); // unique
+  for (const c of g.avoid) assert.ok(codes.includes(c));
+  assert.deepEqual(g.diets, []);
+});
+
+test("randomGuestProfile never exceeds the pool size", () => {
+  const g = randomGuestProfile(["1"], () => 0.99, 3);
+  assert.equal(g.avoid.length, 1);
 });
