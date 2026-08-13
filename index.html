@@ -3,12 +3,40 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Forte — the smart kitchen POS. A Piano-group prototype: allergen intelligence, real-time food cost, smart prep & waste." />
     <title>Forte — the smart kitchen POS</title>
+
+    <link rel="icon" href="assets/img/logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="assets/css/tokens.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/components.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
   </head>
   <body>
-    <main>
-      <h1>Forte</h1>
-      <p>The smart kitchen POS. Prototype scaffolding — UI arrives in the next phases.</p>
+    <header class="topbar">
+      <div class="brand">
+        <img src="assets/img/logo.svg" width="28" height="28" alt="" />
+        <span><span class="brand-piano">Piano</span><span class="brand-dot"></span><span class="brand-forte">Forte</span></span>
+      </div>
+
+      <nav class="role-switch" aria-label="Switch role (prototype — no login)">
+        <button data-role="waiter" aria-pressed="true">Waiter</button>
+        <button data-role="chef" aria-pressed="false">Chef</button>
+        <button data-role="manager" aria-pressed="false">Manager</button>
+      </nav>
+    </header>
+
+    <main class="app-main" id="view" aria-live="polite">
+      <div class="empty">Loading…</div>
     </main>
+
+    <script type="module" src="assets/js/app.js"></script>
   </body>
 </html>
