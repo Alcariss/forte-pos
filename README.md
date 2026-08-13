@@ -52,13 +52,13 @@ npm test           # runs node --test against tests/*.test.js
 ## Roles
 
 The prototype ships a **role switcher** (top-right) to demo three hard-coded
-surfaces without authentication:
+surfaces without authentication. Each is also deep-linkable via the URL hash:
 
-| Role      | Sees                                                        |
-|-----------|-------------------------------------------------------------|
-| Waiter    | Order screen with guest allergen/diet filter                |
-| Chef      | Prep list, waste logging, kitchen allergen matrix           |
-| Manager   | Food-cost dashboard, margins, margin alerts, waste reports  |
+| Role      | Route       | Sees                                                        |
+|-----------|-------------|-------------------------------------------------------------|
+| Waiter    | `#waiter`   | Order screen with guest allergen/diet filter                |
+| Chef      | `#chef`     | Prep list, waste logging, kitchen allergen matrix           |
+| Manager   | `#manager`  | Food-cost dashboard, margins, margin alerts, waste reports  |
 
 ## Project layout
 
@@ -70,16 +70,26 @@ forte-pos/
 │   ├── js/                 # ES modules (logic + UI)
 │   └── img/                # logo, icons
 ├── data/                   # JSON mock store (ingredients, recipes, sales …)
+├── scripts/                # dev-only helpers (seeded sales generator)
 ├── requirements/
 │   └── requirements.yaml   # structured core requirements
-├── docs/                   # architecture, data model, design system
-└── tests/                  # node --test suites for the logic modules
+├── docs/                   # architecture, data model, design, testing, deploy
+├── tests/                  # node --test suites for the logic modules
+└── .github/workflows/      # CI (node --test)
 ```
 
 ## Requirements
 
 Core product requirements are tracked as structured YAML in
 [`requirements/requirements.yaml`](requirements/requirements.yaml).
+
+## Documentation
+
+- [Architecture](docs/architecture.md) — layering, why vanilla, testing strategy
+- [Data model](docs/data-model.md) — entities, files, invariants
+- [Design system](docs/design-system.md) — the "Pianoforte" palette & components
+- [Testing](docs/testing.md) — how the suites map to requirement IDs
+- [Deploy](docs/deploy.md) — GitHub Pages setup and deep links
 
 ## License
 
