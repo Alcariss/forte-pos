@@ -105,7 +105,7 @@ function allergenChips(codes) {
   return `<span class="chips">${codes
     .map((c) => {
       const a = allergenIndex.get(c);
-      return `<span class="chip" title="${esc(a?.name)}">${esc(a?.icon ?? "")} ${esc(a?.name ?? c)}</span>`;
+      return `<span class="chip" title="EU allergen ${esc(c)}: ${esc(a?.name)}"><strong>${esc(c)}</strong> ${esc(a?.icon ?? "")} ${esc(a?.name ?? c)}</span>`;
     })
     .join("")}</span>`;
 }
@@ -132,16 +132,17 @@ function renderWaiter() {
   const avoid = [...state.avoid];
   const diets = [...state.diets];
 
-  const suitable = recipes.filter(
-    (r) => matchesDiet(r, diets) && classifyRecipe(r, ingredientIndex, avoid).status === "safe",
-  );
+  const CATEGORY_ORDER = ["Drinks", "Starters", "Mains"];
+  const isSuitable = (r) => matchesDiet(r, diets) && classifyRecipe(r, ingredientIndex, avoid).status === "safe";
+  const displayedRecipes = recipes.filter((r) => CATEGORY_ORDER.includes(r.category));
+  const suitableCount = displayedRecipes.filter(isSuitable).length;
 
   const allergenToggles = allergens
     .map(
       (a) => `
       <button class="toggle" data-avoid="${esc(a.code)}" data-active="${state.avoid.has(a.code)}"
               aria-pressed="${state.avoid.has(a.code)}">
-        ${esc(a.icon)} ${esc(a.name)}
+        <strong>${esc(a.code)}</strong> ${esc(a.icon)} ${esc(a.name)}
       </button>`,
     )
     .join("");
@@ -154,13 +155,18 @@ function renderWaiter() {
     )
     .join("");
 
-  const menuHtml = [...groupByCategory(recipes).entries()]
-    .map(([category, items]) => {
-      const rows = items
-        .map((r) => {
-          const dietOk = matchesDiet(r, diets);
-          const cls = classifyRecipe(r, ingredientIndex, avoid);
-          const ok = dietOk && cls.status === "safe";
+  const byCat = groupByCategory(recipes);
+  const menuHtml = CATEGORY_ORDER.filter((category) => byCat.has(category))
+    .map((category) => {
+      const evaluated = byCat.get(category).map((r) => {
+        const dietOk = matchesDiet(r, diets);
+        const cls = classifyRecipe(r, ingredientIndex, avoid);
+        return { r, dietOk, cls, ok: dietOk && cls.status === "safe" };
+      });
+      // suitable dishes first, unsuitable greyed at the bottom (sort is stable)
+      evaluated.sort((a, b) => Number(b.ok) - Number(a.ok));
+      const rows = evaluated
+        .map(({ r, dietOk, cls, ok }) => {
           const reasons = [];
           if (!dietOk) reasons.push(`not ${diets.join(" / ")}`);
           for (const code of cls.offending) reasons.push(state.store.allergenIndex.get(code)?.name ?? code);
@@ -187,20 +193,19 @@ function renderWaiter() {
 
   const filterSummary =
     avoid.length || diets.length
-      ? `<span class="badge neutral">${suitable.length} of ${recipes.length} dishes suitable</span>`
-      : `<span class="muted">Tap allergens a guest must avoid, or a diet, to filter the menu.</span>`;
+      ? `<span class="badge neutral">${suitableCount} of ${displayedRecipes.length} dishes suitable</span>`
+      : "";
 
   return `
     <div class="view-title">
       <div>
         <h1>Order screen</h1>
-        <div class="subtitle">Answer "what can I eat?" with confidence — allergens come straight from the recipes.</div>
+        <div class="subtitle">Help the guest choose with confidence — allergens come straight from the recipes.</div>
       </div>
     </div>
     ${renderGuestDemoPanel()}
     <div class="card section">
-      <h3>Guest filter</h3>
-      <p class="muted" style="margin-top:-4px">Avoid allergens</p>
+      <h3>Allergen filter</h3>
       <div class="filter-group">${allergenToggles}</div>
       <p class="muted" style="margin:12px 0 4px">Diet</p>
       <div class="filter-group">${dietToggles}</div>
@@ -237,15 +242,9 @@ function renderGuestDemoPanel() {
     const chips = g.avoid
       .map((c) => {
         const a = allergenIndex.get(c);
-        return `<span class="chip">${esc(a?.icon ?? "")} ${esc(a?.name ?? c)}</span>`;
+        return `<span class="chip" title="EU allergen ${esc(c)}: ${esc(a?.name ?? c)}"><strong>${esc(c)}</strong> ${esc(a?.icon ?? "")} ${esc(a?.name ?? c)}</span>`;
       })
       .join("");
-    const missing = g.avoid.filter((c) => !state.avoid.has(c));
-    const hint = missing.length
-      ? `<span class="badge warn">Record in the filter: ${esc(
-          missing.map((c) => allergenIndex.get(c)?.name ?? c).join(", "),
-        )}</span>`
-      : `<span class="badge safe">✓ Filter matches ${esc(g.name)} — the menu shows what they can eat</span>`;
     body = `
       <div class="row" style="align-items:flex-start">
         <div class="row-main">
@@ -255,7 +254,6 @@ function renderGuestDemoPanel() {
           <span class="muted">“Hi — I'm allergic to:”</span>
           <span class="chips" style="margin-top:6px">${chips}</span>
         </div>
-        <div class="right">${hint}</div>
       </div>`;
   }
 
@@ -501,7 +499,7 @@ function renderChef() {
 
   const matrix = allergenMatrix(recipes, ingredientIndex, allergens);
   const matrixHead = matrix.columns
-    .map((c) => `<th title="${esc(c.name)}">${esc(c.icon)}</th>`)
+    .map((c) => `<th title="EU allergen ${esc(c.code)}: ${esc(c.name)}">${esc(c.code)} ${esc(c.icon)}</th>`)
     .join("");
   const matrixRows = matrix.rows
     .map(
