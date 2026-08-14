@@ -703,6 +703,9 @@ function renderMatrix() {
         <span class="muted">popularity × margin · last ${windowDays} days of sales</span>
       </div>
       <div class="grid grid-two">${QUAD_ORDER.map(cell).join("")}</div>
+      <p class="muted" style="font-size:.78rem;margin-top:8px">
+        Based on the Kasavana-Smith method: popularity by the 70% rule, profitability vs the average contribution margin.
+      </p>
     </section>`;
 }
 
