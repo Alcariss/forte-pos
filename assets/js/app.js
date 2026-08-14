@@ -18,10 +18,12 @@ import {
   randomGuestProfile,
 } from "./order.js";
 import { indexIngredients } from "./allergens.js";
-import { baselineOverlay, stepMarket, applyOverlay } from "./market.js";
+import { baselineOverlay, stepMarket, applyOverlay, nextDaySales } from "./market.js";
+import { menuEngineering } from "./menu.js";
 
 const STORAGE_KEY = "forte.demo.v1"; // namespaced + versioned demo cache
 const MARKET_SEED = 1; // deterministic market for rehearsable demos
+const MENU_WINDOW_DAYS = 7; // menu engineering uses a rolling weekly window
 
 const state = {
   store: null,
@@ -32,6 +34,7 @@ const state = {
   prepWeekday: tomorrowWeekday(),
   order: emptyOrder(), // current draft order (waiter)
   tickets: [], // sent kitchen tickets (chef)
+  sales: [], // seed sales + simulated days (rebuilt from market.tick)
   market: { overlay: null, tick: 0, lastMoves: [], lastEvent: null },
 };
 
@@ -40,6 +43,36 @@ const root = () => document.getElementById("view");
 // Ingredient index with the current market overlay applied (for F2 recompute).
 function pricedIndex() {
   return indexIngredients(applyOverlay(state.store.ingredients, state.market.overlay));
+}
+
+// --- day simulation helpers ------------------------------------------------
+
+function isoAddDays(dateIso, days) {
+  const d = new Date(dateIso + "T00:00:00Z");
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+function lastSeedDate() {
+  return state.store.sales.reduce((max, s) => (s.date > max ? s.date : max), "0000-00-00");
+}
+
+// The current simulated "today" = last seed day + number of simulated days.
+function simulatedEndDate() {
+  return isoAddDays(lastSeedDate(), state.market.tick);
+}
+
+// Rebuild the evolving sales set deterministically from market.tick.
+function rebuildSales() {
+  const base = state.store.sales;
+  const extra = [];
+  const last = lastSeedDate();
+  for (let d = 1; d <= state.market.tick; d++) {
+    const dateIso = isoAddDays(last, d);
+    const weekday = (new Date(dateIso + "T00:00:00Z").getUTCDay() + 6) % 7; // 0=Mon
+    extra.push(...nextDaySales(state.store.recipes, d, dateIso, weekday, MARKET_SEED));
+  }
+  state.sales = extra.length ? base.concat(extra) : base;
 }
 
 
@@ -472,8 +505,8 @@ function renderTicketBoard() {
 }
 
 function renderChef() {
-  const { recipes, ingredientIndex, sales, allergens } = state.store;
-  const prep = buildPrepList(recipes, ingredientIndex, sales, { weekday: state.prepWeekday });
+  const { recipes, ingredientIndex, allergens } = state.store;
+  const prep = buildPrepList(recipes, ingredientIndex, state.sales, { weekday: state.prepWeekday });
 
   const weekdayOptions = WEEKDAYS.map(
     (w, i) => `<option value="${i}" ${i === state.prepWeekday ? "selected" : ""}>${w}</option>`,
@@ -606,6 +639,7 @@ function renderManager() {
       </div>
     </div>
     ${marketPanel}
+    ${renderMatrix()}
     <section class="section">
       <h2>Food cost by dish</h2>
       <div class="table-wrap">
@@ -614,6 +648,61 @@ function renderManager() {
           <tbody>${costRows}</tbody>
         </table>
       </div>
+    </section>`;
+}
+
+// Menu engineering matrix — popularity (rolling weekly sales) x profitability.
+const QUAD = {
+  puzzle: { label: "Puzzles", hint: "reposition / feature", sub: "high margin · low sales", badge: "neutral", color: "var(--brass)" },
+  star: { label: "Stars", hint: "protect & promote", sub: "popular · high margin", badge: "safe", color: "var(--safe)" },
+  dog: { label: "Dogs", hint: "candidate to cut", sub: "low sales · thin margin", badge: "danger", color: "var(--danger)" },
+  plowhorse: { label: "Plowhorses", hint: "re-cost or nudge price", sub: "popular · thin margin", badge: "warn", color: "var(--warn)" },
+};
+const QUAD_ORDER = ["puzzle", "star", "dog", "plowhorse"]; // 2x2: profitability top->bottom, popularity left->right
+
+function renderMatrix() {
+  const { recipes } = state.store;
+  const { rows, windowDays } = menuEngineering(recipes, pricedIndex(), state.sales, {
+    endDate: simulatedEndDate(),
+    windowDays: MENU_WINDOW_DAYS,
+  });
+  const byQuad = { star: [], plowhorse: [], puzzle: [], dog: [] };
+  for (const r of rows) byQuad[r.quadrant].push(r);
+  for (const k of Object.keys(byQuad)) byQuad[k].sort((a, b) => b.units - a.units);
+
+  const cell = (key) => {
+    const q = QUAD[key];
+    const items = byQuad[key];
+    const list = items.length
+      ? items
+          .map(
+            (r) => `
+            <li class="row" style="padding:6px 10px">
+              <div class="row-main"><span class="row-title">${esc(r.recipe.name)}</span>
+                <span class="muted">${r.units} sold · ${czk(r.marginCzk, 0)}/plate</span>
+              </div>
+            </li>`,
+          )
+          .join("")
+      : `<p class="muted" style="margin:6px 0 0">—</p>`;
+    return `
+      <div class="card" style="border-top:3px solid ${q.color}">
+        <div class="view-title" style="margin-bottom:2px">
+          <h3 style="margin:0">${q.label} <span class="badge ${q.badge}">${items.length}</span></h3>
+          <span class="muted">${q.hint}</span>
+        </div>
+        <div class="muted" style="font-size:.78rem;margin-bottom:8px">${q.sub}</div>
+        <ul class="row-list">${list}</ul>
+      </div>`;
+  };
+
+  return `
+    <section class="section">
+      <div class="view-title">
+        <h2>Menu engineering</h2>
+        <span class="muted">popularity × margin · last ${windowDays} days of sales</span>
+      </div>
+      <div class="grid grid-two">${QUAD_ORDER.map(cell).join("")}</div>
     </section>`;
 }
 
@@ -628,29 +717,30 @@ function renderMarketPanel() {
             `<span class="chip">${esc(mv.icon)} ${esc(mv.name)} <strong style="color:${mv.dir === "up" ? "var(--danger)" : "var(--safe)"}">${mv.dir === "up" ? "▲" : "▼"} ${pct(Math.abs(mv.pct), 1)}</strong></span>`,
         )
         .join("")
-    : `<span class="muted">No changes yet — press “Simulate market changes” to see prices move.</span>`;
+    : `<span class="muted">No days simulated yet — press “Simulate next day”.</span>`;
   const eventBadge = m.lastEvent ? `<span class="badge warn">📣 ${esc(m.lastEvent)}</span>` : "";
+  const dayBadge = m.tick ? `Day ${m.tick} · ${simulatedEndDate()}` : "Day 0 (baseline)";
 
   return `
     <div class="card section">
       <div class="view-title" style="margin-bottom:4px">
         <h3 style="margin:0">Demo mode ${eventBadge}</h3>
         <span>
-          <button class="btn primary small" id="mkt-step">Simulate market changes</button>
+          <button class="btn primary small" id="mkt-step">Simulate next day</button>
           <button class="btn small" id="mkt-reset">Reset</button>
-          <span class="badge neutral" style="margin-left:6px">event ${m.tick}</span>
+          <span class="badge neutral" style="margin-left:6px">${dayBadge}</span>
         </span>
       </div>
       <p class="muted" style="margin:0 0 10px">
-        Demo mode simulates real-world events — supplier price swings and shocks like a
-        dairy shortage or a salmon import spike. Each click advances the market and the
-        dashboard below recomputes food cost, margins, and alerts live.
+        Each click simulates one more day: a market event moves ingredient prices and a
+        fresh day of sales comes in. Food cost, margins and the menu-engineering matrix
+        recompute live.
       </p>
       <div class="chips">${ticker}</div>
     </div>`;
 }
 
-function marketTick() {
+function advanceDay() {
   const { overlay, moves, event } = stepMarket(
     state.market.overlay,
     state.store.ingredients,
@@ -661,6 +751,7 @@ function marketTick() {
   state.market.tick += 1;
   state.market.lastMoves = moves;
   state.market.lastEvent = event;
+  rebuildSales(); // append the day's sales
   persist();
   if (state.role === "manager") render();
 }
@@ -669,7 +760,7 @@ function wireManager() {
   const step = root().querySelector("#mkt-step");
   if (step)
     step.addEventListener("click", () => {
-      marketTick();
+      advanceDay();
       if (state.role !== "manager") render();
     });
   const reset = root().querySelector("#mkt-reset");
@@ -679,6 +770,7 @@ function wireManager() {
       state.market.tick = 0;
       state.market.lastMoves = [];
       state.market.lastEvent = null;
+      rebuildSales();
       persist();
       render();
     });
@@ -719,6 +811,7 @@ function wireRoleSwitch() {
   window.addEventListener("storage", (e) => {
     if (e.key !== STORAGE_KEY) return;
     hydrate();
+    rebuildSales();
     render();
   });
 }
@@ -728,6 +821,7 @@ async function init() {
     state.store = await loadStore();
     if (!hydrate()) seedDemo(); // first visit → seed a sample ticket
     if (!state.market.overlay) state.market.overlay = baselineOverlay(state.store.ingredients);
+    rebuildSales(); // seed sales + any simulated days from market.tick
     const fromHash = location.hash.slice(1);
     if (VIEWS[fromHash]) state.role = fromHash;
     wireRoleSwitch();

@@ -58,7 +58,7 @@ surfaces without authentication. Each is also deep-linkable via the URL hash:
 |-----------|-------------|-------------------------------------------------------------|
 | Waiter    | `#waiter`   | Demo mode (random guest), guest allergen/diet filter, live order |
 | Chef      | `#chef`     | Kitchen ticket board (allergen conflicts flagged), prep list, allergen matrix |
-| Manager   | `#manager`  | Demo mode market simulator + a live food-cost-by-dish table with per-dish warnings |
+| Manager   | `#manager`  | Demo mode (simulate days), a menu-engineering matrix, and a live food-cost-by-dish table |
 
 ## Demo features
 
@@ -74,12 +74,12 @@ Three "make it live" threads sit on top of the core features:
   at the pass. State is cached in `localStorage`, so it survives reloads and even
   **syncs across two browser windows** (open `#waiter` and `#chef` side by side to
   fake a handheld → kitchen display).
-- **Manager Demo mode** — each **“Simulate market changes”** click applies
-  one named market event (salmon glut, dairy shortage, cheese climb, beef supply
-  …) to ingredient prices, and the food-cost table recomputes **live**. Events are
-  **deterministic** and cycle in a fixed order, so a rehearsed demo repeats: the
-  first click (“salmon down”) pulls the salmon dish out of the red; a later “cheese
-  prices climb” tips Caesar into a warning. Reset returns prices to baseline.
+- **Manager Demo mode** — each **“Simulate next day”** click advances one day: a
+  named market event moves ingredient prices *and* a fresh day of sales comes in.
+  Food cost, margins, and a **menu-engineering matrix** (Stars / Plowhorses /
+  Puzzles / Dogs = popularity × margin over a rolling 7 days) recompute **live**.
+  Events are **deterministic**, so a rehearsed demo repeats; Reset returns to
+  baseline (Day 0).
 
 ## Project layout
 

@@ -152,3 +152,40 @@ export function applyOverlay(ingredients, overlay) {
     overlay[ing.id] != null ? { ...ing, pack_price_czk: overlay[ing.id], price_history: [] } : ing,
   );
 }
+
+// --- day simulation: generate one day of sales -----------------------------
+// Base daily volume per recipe and a weekday multiplier (0=Mon..6=Sun), mirroring
+// scripts/generate-sales.mjs so simulated days blend with the seed history.
+const BASE_SALES = {
+  "rec-schnitzel": 16,
+  "rec-svickova": 14,
+  "rec-goulash": 12,
+  "rec-fried-cheese": 10,
+  "rec-salmon": 8,
+  "rec-lentil-curry": 6,
+  "rec-caesar": 7,
+  "rec-garlic-soup": 9,
+  "rec-fries": 20,
+  "rec-pilsner": 60,
+  "rec-lemonade": 15,
+};
+const WEEKDAY_FACTOR = [0.8, 0.85, 0.9, 1.0, 1.3, 1.5, 1.2];
+
+/**
+ * Deterministically generate one simulated day of sales rows for every recipe.
+ * @param {Array} recipes
+ * @param {number} dayIndex 1-based index of the simulated day (drives the PRNG)
+ * @param {string} dateIso YYYY-MM-DD for the day
+ * @param {number} weekday 0=Mon .. 6=Sun
+ * @param {number} seed
+ * @returns {Array<{date, recipe_id, qty, weekday}>}
+ */
+export function nextDaySales(recipes, dayIndex, dateIso, weekday, seed = 1) {
+  const rng = makeRng((seed ^ (dayIndex * 0x85ebca6b)) >>> 0);
+  return recipes.map((r) => {
+    const base = BASE_SALES[r.id] ?? 5;
+    const noise = 0.85 + 0.3 * rng();
+    const qty = Math.max(0, Math.round(base * WEEKDAY_FACTOR[weekday] * noise));
+    return { date: dateIso, recipe_id: r.id, qty, weekday };
+  });
+}

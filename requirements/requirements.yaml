@@ -247,12 +247,43 @@ features:
           recomputes on every click.
       - id: F5-R5
         text: >
-          Framed as "Demo mode": a single "Simulate market changes" button advances
-          one event per click, plus Reset and a market ticker strip.
+          Framed as "Demo mode": a single "Simulate next day" button advances one
+          simulated day per click — applying a market event AND appending a fresh
+          day of sales (deterministic from the day counter) — plus Reset and a
+          market ticker strip.
     acceptance:
       - Prices stay within clamp bounds (0.6x..1.6x baseline).
       - A "salmon down" event pulls the salmon dish out of the red; a later cheese
         event tips Caesar into a margin alert.
+      - Each click advances the day counter and appends one day of sales that the
+        forecast (F3) and menu-engineering (F6) react to.
+
+  - id: F6
+    name: Menu engineering matrix (demo slice)
+    priority: should
+    module: assets/js/menu.js
+    tests: tests/menu.test.js
+    rationale: >
+      Leverages sales data in the manager view: combine popularity (units sold)
+      with profitability (margin) to classify the menu — the most recognised
+      restaurant report, and it moves live as prices and sales change.
+    requirements:
+      - id: F6-R1
+        text: >
+          Compute popularity from units sold in a rolling window (default 7 days,
+          ending on the current simulated day).
+      - id: F6-R2
+        text: >
+          Classify each dish into Stars / Plowhorses / Puzzles / Dogs using the
+          Kasavana-Smith method (70% popularity rule; profitability vs the average
+          unit contribution margin).
+      - id: F6-R3
+        text: >
+          Recompute live from the market overlay (margins) and the evolving sales
+          set (popularity) as days are simulated.
+    acceptance:
+      - A high-volume, high-margin dish is a Star; a low-sales, thin-margin dish a Dog.
+      - The matrix rebuilds when a simulated day changes prices or sales.
 
 # ---------------------------------------------------------------------------
 # Explicitly out of scope for the prototype (roadmap only)
